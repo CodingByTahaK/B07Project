@@ -1,4 +1,4 @@
-package com.example.b07demosummer2024;
+package com.cscb07.museum;
 
 import android.view.LayoutInflater;
 import android.view.View;

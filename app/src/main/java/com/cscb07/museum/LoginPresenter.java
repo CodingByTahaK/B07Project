@@ -9,22 +9,18 @@ public class LoginPresenter implements LoginContract.Presenter {
         this.model = model;
     }
 
-    @Override
-    public void onDestroy() {
-        this.view = null;
-    }
 
     @Override
-    public void onLoginClicked(String email, String password) {
-        if (email.isEmpty() || password.isEmpty()) {
-            view.showErrorMessage("Email and password cannot be empty");
+    public void login(String email, String password) {
+        if (!checkEmail(email) || !checkPassword(password)) {
+            view.showErrorMessage("Some fields are invalid");
             return;
         }
 
         model.login(email, password, new LoginContract.Model.LoginListener() {
             @Override
             public void onSuccess() {
-                view.navigateToMain();
+                view.navigateToHome();
             }
 
             @Override
@@ -35,26 +31,16 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void onChangeToSignupClicked() {
-        view.navigateToSignup();
-    }
-
-    @Override
-    public void onChangeToLoginClicked() {
-        view.navigateToLogin();
-    }
-
-    @Override
-    public void onSignupClicked(String email, String password, String username) {
-        if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
-            view.showErrorMessage("All fields are required");
+    public void signup(String username, String email, String password, String confirmPassword) {
+        if (!checkUsername(username) || !checkEmail(email) || !checkPassword(password) || !checkConfirmPassword(password, confirmPassword)) {
+            view.showErrorMessage("Some fields are invalid");
             return;
         }
 
         model.signup(email, password, username, new LoginContract.Model.LoginListener() {
             @Override
             public void onSuccess() {
-                view.navigateToMain();
+                view.navigateToHome();
             }
 
             @Override
@@ -64,9 +50,48 @@ public class LoginPresenter implements LoginContract.Presenter {
         });
     }
 
-    @Override
-    public void onLogoutClicked() {
-        model.logout();
-        view.navigateToLogin();
+    public boolean checkEmail(String email) {
+        if (email != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            view.clearEmailError();
+            return true;
+        }
+        view.showInvalidEmail();
+        return false;
     }
+
+    public boolean checkPassword(String password) {
+        if (password != null && password.length() >= 6) {
+            view.clearPasswordError();
+            return true;
+        }
+        view.showInvalidPassword();
+        return false;
+    }
+
+    public boolean checkUsername(String username) {
+        if (username != null && !username.isEmpty()) {
+            view.clearUsernameError();
+            return true;
+        }
+        view.showInvalidUsername();
+        return false;
+    }
+
+    public boolean checkConfirmPassword(String password, String password_confirm) {
+        if (password != null && password.equals(password_confirm)) {
+            view.clearConfirmPasswordError();
+            return true;
+        }
+        view.showPasswordsDoNotMatch();
+        return false;
+    }
+
+    @Override
+    public void checkIsLogined() {
+        if (model.getCurrentUser() != null) {
+            view.navigateToHome();
+        }
+    }
+
+
 }

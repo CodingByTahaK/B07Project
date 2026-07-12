@@ -8,6 +8,12 @@ public class LoginModel implements LoginContract.Model {
     public LoginModel() {
         mAuth = FirebaseAuth.getInstance();
     }
+
+    @Override
+    public FirebaseUser getCurrentUser() {
+        return mAuth.getCurrentUser();
+    }
+
     @Override
     public void login(String email, String password, LoginContract.Model.LoginListener listener) {
         mAuth.signInWithEmailAndPassword(email, password)
