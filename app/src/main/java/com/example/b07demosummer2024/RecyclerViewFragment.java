@@ -18,7 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RecyclerViewFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -28,6 +30,7 @@ public class RecyclerViewFragment extends Fragment {
 
     private FirebaseDatabase db;
     private DatabaseReference itemsRef;
+    private Map<String, Boolean> likeStatusMap = new HashMap<>();
 
     @Nullable
     @Override
@@ -45,6 +48,12 @@ public class RecyclerViewFragment extends Fragment {
 
         itemList = new ArrayList<>();
         itemAdapter = new ItemAdapter(itemList);
+        itemAdapter = new ItemAdapter(itemList, new ItemAdapter.LikeClick() {
+            @Override
+            public void onLikeClick(Item item, int position) {
+                likeStatusMap.put(item.getId(), item.isLiked());
+            }
+        });
         recyclerView.setAdapter(itemAdapter);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");

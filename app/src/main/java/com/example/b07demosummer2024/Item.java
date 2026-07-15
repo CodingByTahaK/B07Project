@@ -7,6 +7,8 @@ public class Item {
     private String author;
     private String genre;
     private String description;
+    private int likeCount;
+    private boolean isLiked;
 
     public Item() {}
 
@@ -16,6 +18,8 @@ public class Item {
         this.author = author;
         this.genre = genre;
         this.description = description;
+        this.likeCount = 0;
+        this.isLiked = false;
     }
 
     // Getters and setters
@@ -29,4 +33,8 @@ public class Item {
     public void setGenre(String genre) { this.genre = genre; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+    public int getLikeCount() { return likeCount; }
+    public void setLikeCount(int likeCount) { this.likeCount = likeCount; }
+    public boolean isLiked() { return isLiked; }
+    public void setLiked(boolean liked) { isLiked = liked; }
 }
