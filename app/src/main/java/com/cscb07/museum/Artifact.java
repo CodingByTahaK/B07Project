@@ -9,30 +9,36 @@ public class Artifact {
     private String category;
     private String material;
     private String period;
-
-    //Optional Fields work on later
-/*    private String culturalOrigin;
+    private String culturalOrigin;
     private String dimensions;
-    private String report;
-    private String currentLocation;
-    private String aqMethod;
+    private String conditionReport;
+    private String location;
+    private String acqMethod;
     private String provenance;
-    private int accNum;
+    private String accNum; //later change to int
     private String notes;
-    private String image;*/
-
+    private String image; //this is a uri
 
     public Artifact(){
     }
 
     //!!note for the time being, im just making lotNum into a String,as then I can use .getkey() to generate a string
-    public Artifact(String lotNum, String name, String description, String category, String material, String period) {
+    public Artifact(String lotNum, String name, String description, String category, String material, String period, String culturalOrigin, String dimensions, String conditionReport, String location, String acqMethod, String provenance, String accNum, String notes, String image) {
         this.lotNum = lotNum;
         this.name = name;
         this.description = description;
         this.category = category;
         this.material = material;
         this.period = period;
+        this.culturalOrigin = culturalOrigin;
+        this.dimensions = dimensions;
+        this.conditionReport = conditionReport;
+        this.location = location;
+        this.acqMethod = acqMethod;
+        this.provenance = provenance;
+        this.accNum = accNum;
+        this.notes = notes;
+        this.image=image;
     }
 
     public String getLotNum() {
@@ -81,5 +87,77 @@ public class Artifact {
 
     public void setPeriod(String period) {
         this.period = period;
+    }
+
+    public String getCulturalOrigin() {
+        return culturalOrigin;
+    }
+
+    public void setCulturalOrigin(String culturalOrigin) {
+        this.culturalOrigin = culturalOrigin;
+    }
+
+    public String getDimensions() {
+        return dimensions;
+    }
+
+    public void setDimensions(String dimensions) {
+        this.dimensions = dimensions;
+    }
+
+    public String getConditionReport() {
+        return conditionReport;
+    }
+
+    public void setConditionReport(String conditionReport) {
+        this.conditionReport = conditionReport;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getAcqMethod() {
+        return acqMethod;
+    }
+
+    public void setAcqMethod(String acqMethod) {
+        this.acqMethod = acqMethod;
+    }
+
+    public String getProvenance() {
+        return provenance;
+    }
+
+    public void setProvenance(String provenance) {
+        this.provenance = provenance;
+    }
+
+    public String getAccNum() {
+        return accNum;
+    }
+
+    public void setAccNum(String accNum) {
+        this.accNum = accNum;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

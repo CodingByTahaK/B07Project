@@ -1,6 +1,8 @@
 package com.cscb07.museum;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,14 +22,19 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.net.URI;
+
 public class AddItemFragment extends Fragment {
-    private EditText editTextName, editTextDescription;
+    private EditText editTextName, editTextDescription, editTextCulturalOrigin, editTextDimensions, editTextConditionReport, editTextCurrentLocation, editTextAccMethod, editTextProvenance, editTextAccNum, editTextNotes;
     private Spinner spinnerCategory, spinnerCategory1, spinnerMaterial, spinnerPeriod;
-    private Button buttonAdd;
+    private Button buttonAdd, buttonUploadImg;
 
     private FirebaseDatabase db;
     private DatabaseReference artifactsRef;
 
+    private SupabaseImageUploader imageUploader;
+    private String imgURL;
+    private Uri imgURI;
     private Artifact artifact;
 
     @Nullable
@@ -37,7 +48,18 @@ public class AddItemFragment extends Fragment {
         spinnerCategory1 = view.findViewById(R.id.spinnerCategory1);
         spinnerMaterial = view.findViewById(R.id.spinnerMaterial);
         spinnerPeriod = view.findViewById(R.id.spinnerPeriod);
+
+        editTextCulturalOrigin = view.findViewById(R.id.editCulturalOrigin);
+        editTextDimensions = view.findViewById(R.id.editDimensions);
+        editTextConditionReport = view.findViewById(R.id.editConditionReport);
+        editTextCurrentLocation = view.findViewById(R.id.editCurrentLocation);
+        editTextAccMethod = view.findViewById(R.id.editAccMethod);
+        editTextProvenance = view.findViewById(R.id.editProvenance);
+        editTextAccNum = view.findViewById(R.id.editAccNum);
+        editTextNotes = view.findViewById(R.id.editNotes);
+
         buttonAdd = view.findViewById(R.id.buttonAdd);
+        buttonUploadImg = view.findViewById(R.id.buttonUploadImg);
 
         db = FirebaseDatabase.getInstance("https://b07-project-66023-default-rtdb.firebaseio.com/");
 
@@ -65,6 +87,48 @@ public class AddItemFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPeriod.setAdapter(adapterPeriods);
 
+        //button triggers photo activity picker
+        buttonUploadImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //code snippet from android docs, credit: https://developer.android.com/training/data-storage/shared/photo-picker#java
+                // Registers a photo picker activity launcher in single-select mode.
+                ActivityResultLauncher<PickVisualMediaRequest> pickMedia =registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                            // Callback is invoked after the user selects a media item or closes the
+                            // photo picker.
+                            if (uri != null) {
+                                Log.d("PhotoPicker", "Selected URI: " + uri);
+                                imgURI = uri;
+                            } else {
+                                Log.d("PhotoPicker", "No media selected");
+                            }
+                });
+
+                //Launch the photo picker and let the user choose only images.
+                pickMedia.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
+
+                //upload image to supabase bucket
+                imageUploader = new SupabaseImageUploader(requireContext());
+                //later try to find a way to put an acutal lotnumber, problem: i upload image before saving lotnum to database,
+                imageUploader.uploadImage(imgURI, "lotNum", new
+                        SupabaseImageUploader.UploadCallback() {
+                            @Override
+                            public void onSuccess(String publicUrl) {
+                                imgURL = publicUrl;
+
+                            }
+                            @Override
+                            public void onError(String message) {
+                                // Handle upload error
+                            }
+                        });
+
+            }
+        });
+
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +147,17 @@ public class AddItemFragment extends Fragment {
         String material = spinnerMaterial.getSelectedItem().toString().toLowerCase();
         String period = spinnerPeriod.getSelectedItem().toString().toLowerCase();
 
+
+        String culturalOrigin = editTextCulturalOrigin.getText().toString().trim();
+        String dimensions = editTextDimensions.getText().toString().trim();
+        String conditionReport = editTextConditionReport.getText().toString().trim();
+        String currentLocation = editTextCurrentLocation.getText().toString().trim();
+        String accMethod = editTextAccMethod.getText().toString().trim();
+        String provenance = editTextProvenance.getText().toString().trim();
+        String accNum = editTextAccNum.getText().toString().trim();
+        String notes = editTextNotes.getText().toString().trim();
+        String image = imgURL;
+
         String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
 
         if (name.isEmpty() || description.isEmpty() || category1.isEmpty() || material.isEmpty() || period.isEmpty()) {
@@ -92,7 +167,7 @@ public class AddItemFragment extends Fragment {
 
         artifactsRef = db.getReference("artifacts");
         String lotNum = artifactsRef.push().getKey();
-        Artifact artifact = new Artifact(lotNum, name, description, category1, material, period);
+        Artifact artifact = new Artifact(lotNum, name, description, category1, material, period, culturalOrigin, dimensions, conditionReport, currentLocation, accMethod, provenance, accNum, notes, image);
 
         artifactsRef.child(lotNum).setValue(artifact).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
