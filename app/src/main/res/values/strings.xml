@@ -27,6 +27,18 @@
     <string name="invalid_password">Password must be at least 6 characters</string>
     <string name="password_not_same">Passwords do not match</string>
 
+    <string name="name_hint">Name</string>
+    <string name="description_hint">Description</string>
+    <string name="cultural_origin_hint">Cultural Origin</string>
+    <string name="dimensions_hint">Dimensions</string>
+    <string name="condition_report_hint">Condition Report</string>
+    <string name="current_location_hint">Current Location</string>
+    <string name="Acquisition_method_hint">Acquisition Method</string>
+    <string name="Accesnion_num_hint">Accension Number</string>
+    <string name="provenance_hint">Provenance</string>
+    <string name="notes_hint">Notes</string>
+    <string name="upload_image_hint">Upload Image</string>
+
     <string-array name="categories_array">
         <item>Books</item>
         <item>Movies</item>

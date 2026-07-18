@@ -36,6 +36,9 @@ public class AddItemFragment extends Fragment {
     private String imgURL;
     private Uri imgURI;
     private Artifact artifact;
+    private String lotNum;
+
+
 
     @Nullable
     @Override
@@ -62,6 +65,8 @@ public class AddItemFragment extends Fragment {
         buttonUploadImg = view.findViewById(R.id.buttonUploadImg);
 
         db = FirebaseDatabase.getInstance("https://b07-project-66023-default-rtdb.firebaseio.com/");
+        artifactsRef = db.getReference("artifacts");
+        lotNum = artifactsRef.push().getKey();
 
         // Set up the spinner with categories
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -87,44 +92,50 @@ public class AddItemFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPeriod.setAdapter(adapterPeriods);
 
+
+        //code snippet from android docs, credit: https://developer.android.com/training/data-storage/shared/photo-picker#java
+        // Registers a photo picker activity launcher in single-select mode.
+        ActivityResultLauncher<PickVisualMediaRequest> pickMedia =registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+            // Callback is invoked after the user selects a media item or closes the
+            // photo picker.
+            if (uri != null) {
+                Log.d("PhotoPicker", "Selected URI: " + uri);
+                imgURI = uri;
+
+                //upload image to supabase bucket
+                imageUploader = new SupabaseImageUploader(requireContext());
+                //later try to find a way to put an acutal lotnumber, problem: i upload image before saving lotnum to database,
+
+                imageUploader.uploadImage(uri, "lotNum", new
+                        SupabaseImageUploader.UploadCallback() {
+                            @Override
+                            public void onSuccess(String publicUrl) {
+                                imgURL = publicUrl;
+                                Log.d("Supabase", "success");
+
+                            }
+                            @Override
+                            public void onError(String message) {
+                                Log.d("Supabase", "failed");
+                                Log.d("Supabase error messaage", message.codePoints() + "uri: " + uri);
+
+                            }
+                        });
+
+            } else {
+                Log.d("PhotoPicker", "No media selected");
+            }
+        });
+
         //button triggers photo activity picker
         buttonUploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //code snippet from android docs, credit: https://developer.android.com/training/data-storage/shared/photo-picker#java
-                // Registers a photo picker activity launcher in single-select mode.
-                ActivityResultLauncher<PickVisualMediaRequest> pickMedia =registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                            // Callback is invoked after the user selects a media item or closes the
-                            // photo picker.
-                            if (uri != null) {
-                                Log.d("PhotoPicker", "Selected URI: " + uri);
-                                imgURI = uri;
-                            } else {
-                                Log.d("PhotoPicker", "No media selected");
-                            }
-                });
-
                 //Launch the photo picker and let the user choose only images.
                 pickMedia.launch(new PickVisualMediaRequest.Builder()
                         .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                         .build());
-
-                //upload image to supabase bucket
-                imageUploader = new SupabaseImageUploader(requireContext());
-                //later try to find a way to put an acutal lotnumber, problem: i upload image before saving lotnum to database,
-                imageUploader.uploadImage(imgURI, "lotNum", new
-                        SupabaseImageUploader.UploadCallback() {
-                            @Override
-                            public void onSuccess(String publicUrl) {
-                                imgURL = publicUrl;
-
-                            }
-                            @Override
-                            public void onError(String message) {
-                                // Handle upload error
-                            }
-                        });
 
             }
         });
@@ -165,8 +176,8 @@ public class AddItemFragment extends Fragment {
             return;
         }
 
-        artifactsRef = db.getReference("artifacts");
-        String lotNum = artifactsRef.push().getKey();
+//        artifactsRef = db.getReference("artifacts");
+//        String lotNum = artifactsRef.push().getKey();
         Artifact artifact = new Artifact(lotNum, name, description, category1, material, period, culturalOrigin, dimensions, conditionReport, currentLocation, accMethod, provenance, accNum, notes, image);
 
         artifactsRef.child(lotNum).setValue(artifact).addOnCompleteListener(task -> {

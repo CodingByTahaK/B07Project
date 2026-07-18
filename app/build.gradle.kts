@@ -40,6 +40,6 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(platform("com.google.firebase:firebase-bom:34.15.0"))
     implementation("com.google.firebase:firebase-auth")
-    implementation("com.squareup.okhttp3:okhttp:4.0.0")
-    implementation("androidx.activity:activity:1.9.0")
+    implementation(libs.okhttp3) //old: 4.0.0
+    implementation(libs.activity.v1130) //old 1.9.0
 }
