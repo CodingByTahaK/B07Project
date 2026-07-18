@@ -80,7 +80,7 @@ public class EditArtifact extends Fragment {
     private void EditArtifact(){
 
         String Name = EditName.getText().toString().toLowerCase().trim();;
-        String Lotnum = EditLotnum.getText().toString().toLowerCase().trim();;
+        String Lotnum = EditLotnum.getText().toString().trim();;
         String Period = EditPeriod.getSelectedItem().toString().toLowerCase().trim();;
         String Material = EditMat.getSelectedItem().toString().toLowerCase().trim();;
         String Category = EditCat.getSelectedItem().toString().toLowerCase().trim();
@@ -92,10 +92,10 @@ public class EditArtifact extends Fragment {
             Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
-        artifactref.child("name").setValue(EditName);
-        artifactref.child("description").setValue(EditDesc);
-        artifactref.child("category").setValue(EditCat);
-        artifactref.child("material").setValue(EditMat);
-        artifactref.child("period").setValue(EditPeriod);
+        artifactref.child("name").setValue(Name);
+        artifactref.child("description").setValue(Description);
+        artifactref.child("category").setValue(Category);
+        artifactref.child("material").setValue(Material);
+        artifactref.child("period").setValue(Period);
     }
 }
