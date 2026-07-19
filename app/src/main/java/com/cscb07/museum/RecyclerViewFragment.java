@@ -22,12 +22,12 @@ import java.util.List;
 
 public class RecyclerViewFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ItemAdapter itemAdapter;
-    private List<Item> itemList;
+    private ArtifactAdapter artifactAdapter;
+    private List<Artifact> artifactList;
     private Spinner spinnerCategory;
 
     private FirebaseDatabase db;
-    private DatabaseReference itemsRef;
+    private DatabaseReference artifactsRef;
 
     @Nullable
     @Override
@@ -43,17 +43,21 @@ public class RecyclerViewFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
 
-        itemList = new ArrayList<>();
-        itemAdapter = new ItemAdapter(itemList);
-        recyclerView.setAdapter(itemAdapter);
+        artifactList = new ArrayList<>();
+        artifactAdapter = new ArtifactAdapter(artifactList);
+        recyclerView.setAdapter(artifactAdapter);
 
-        db = FirebaseDatabase.getInstance();
+        db = FirebaseDatabase.getInstance("https://b07-project-66023-default-rtdb.firebaseio.com/");
+        artifactsRef = db.getReference("artifacts");
+
+        //temp
+        fetchArtifactsFromDatabase("anything");
 
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String category = parent.getItemAtPosition(position).toString().toLowerCase();
-                fetchItemsFromDatabase(category);
+                fetchArtifactsFromDatabase(category);
             }
 
             @Override
@@ -65,17 +69,17 @@ public class RecyclerViewFragment extends Fragment {
         return view;
     }
 
-    private void fetchItemsFromDatabase(String category) {
-        itemsRef = db.getReference("categories/" + category);
-        itemsRef.addValueEventListener(new ValueEventListener() {
+    private void fetchArtifactsFromDatabase(String category) {
+        //artifactsRef = db.getReference("artifacts");
+        artifactsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                itemList.clear();
+                artifactList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Item item = snapshot.getValue(Item.class);
-                    itemList.add(item);
+                    Artifact artifact = snapshot.getValue(Artifact.class);
+                    artifactList.add(artifact);
                 }
-                itemAdapter.notifyDataSetChanged();
+                artifactAdapter.notifyDataSetChanged();
             }
 
             @Override
