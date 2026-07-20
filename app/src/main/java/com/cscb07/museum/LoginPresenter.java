@@ -77,7 +77,7 @@ public class LoginPresenter implements LoginContract.Presenter {
      */
     @Override
     public boolean checkEmail(String email) {
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z._-]+\\.[a-z._-]+";
+        String emailPattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}";
         if (email != null && email.matches(emailPattern)) {
             view.clearEmailError();
             return true;
