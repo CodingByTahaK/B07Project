@@ -24,16 +24,6 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonAddItem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSavedItems"/>
-
-    <Button
-        android:id="@+id/buttonSavedItems"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/saved_items"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDeleteItem"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/buttonBack"/>
 
     <Button
@@ -41,9 +31,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/back"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSavedItems"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDeleteItem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
