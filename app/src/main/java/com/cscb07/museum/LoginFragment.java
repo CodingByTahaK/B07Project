@@ -85,7 +85,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         confirmPassword = view.findViewById(R.id.password_confirm);
 
         presenter = new LoginPresenter(this, new LoginModel());
-        presenter.checkIsLogined();
+        presenter.checkIsLoggedIn();
 
         emailEditText.addTextChangedListener(new EmailWatcher());
         passwordEditText.addTextChangedListener(new PasswordWatcher());

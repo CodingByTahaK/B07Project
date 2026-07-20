@@ -21,7 +21,7 @@ public interface LoginContract {
     }
 
     interface Presenter {
-        void checkIsLogined();
+        void checkIsLoggedIn();
         void login(String email, String password);
         void signup(String username, String email, String password, String confirmPassword);
         boolean checkEmail(String email);

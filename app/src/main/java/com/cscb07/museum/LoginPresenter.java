@@ -51,7 +51,8 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     public boolean checkEmail(String email) {
-        if (email != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z._-]+\\.[a-z._-]+";
+        if (email != null && email.matches(emailPattern)) {
             view.clearEmailError();
             return true;
         }
@@ -87,7 +88,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void checkIsLogined() {
+    public void checkIsLoggedIn() {
         if (model.getCurrentUser() != null) {
             view.navigateToHome();
         }

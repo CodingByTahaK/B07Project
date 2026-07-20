@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(platform("com.google.firebase:firebase-bom:34.15.0"))
