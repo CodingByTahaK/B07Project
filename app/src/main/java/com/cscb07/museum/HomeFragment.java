@@ -57,7 +57,6 @@ public class HomeFragment extends Fragment {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
                 loadFragment(new LoginFragment());
-                getActivity().finish();
             }
         });
 
