@@ -25,7 +25,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 
 public class EditArtifact extends Fragment {
 
-    private EditText EditName, EditLotnum, EditDesc;
+    private EditText EditName, EditLotnum, EditDesc, culturalOrigin, dimensions, conditionReport, currentLocation, accMethod, provenance, accNum, notes;
 
     private Spinner EditPeriod, EditMat, EditCat;
     private Button submit, back, uploadImageButton;;
@@ -55,7 +55,7 @@ public class EditArtifact extends Fragment {
         db = FirebaseDatabase.getInstance("https://b07-project-66023-default-rtdb.firebaseio.com/");
 
 
-
+        //Attaching values to text boxes and buttons
         EditName = view.findViewById(R.id.editTextArtiName);
         EditLotnum = view.findViewById(R.id.editTextArtiLotnum);
         EditPeriod = view.findViewById(R.id.EditPeriodspin);
@@ -66,7 +66,16 @@ public class EditArtifact extends Fragment {
         back = view.findViewById(R.id.backButtonE);
         uploadImageButton = view.findViewById(R.id.buttonUploadImage);
 
+        culturalOrigin = view.findViewById(R.id.editCulturalOrigin);
+        dimensions = view.findViewById(R.id.editDimensions);
+        conditionReport = view.findViewById(R.id.editConditionReport);
+        currentLocation = view.findViewById(R.id.editCurrentLocation);
+        accMethod = view.findViewById(R.id.editAccMethod);
+        provenance = view.findViewById(R.id.editProvenance);
+        accNum = view.findViewById(R.id.editAccNum);
+        notes = view.findViewById(R.id.editNotes);
 
+        //setting up spinners with adapters
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.artifact_periods, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -82,6 +91,7 @@ public class EditArtifact extends Fragment {
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         EditCat.setAdapter(adapter3);
 
+        //supabase setup
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
                 registerForActivityResult(
                         new ActivityResultContracts.PickVisualMedia(),
@@ -165,7 +175,7 @@ public class EditArtifact extends Fragment {
             }
         });
         back.setOnClickListener(v -> getParentFragmentManager().popBackStack());
-
+        //setting upload image button on clicks
         uploadImageButton.setOnClickListener(v -> {
 
             pickMedia.launch(
@@ -184,30 +194,47 @@ public class EditArtifact extends Fragment {
     }
 
     private void EditArtifact(){
-
+        //obtaining values from textboxes
         String Name = EditName.getText().toString().toLowerCase().trim();;
         String Lotnum = EditLotnum.getText().toString().trim();;
         String Period = EditPeriod.getSelectedItem().toString().toLowerCase().trim();;
         String Material = EditMat.getSelectedItem().toString().toLowerCase().trim();;
         String Category = EditCat.getSelectedItem().toString().toLowerCase().trim();
         String Description = EditDesc.getText().toString().toLowerCase().trim();;
+        String culturalOriginText = culturalOrigin.getText().toString();
+        String dimensionsText = dimensions.getText().toString();
+        String conditionReportText = conditionReport.getText().toString();
+        String currentLocationText = currentLocation.getText().toString();
+        String accMethodText = accMethod.getText().toString();
+        String provenanceText = provenance.getText().toString();
+        String accNumText = accNum.getText().toString();
+        String notesText = notes.getText().toString();
 
         artifactref = db.getReference("artifacts").child(Lotnum);
-
+        //name and description must be filled
         if (Name.isEmpty() || Description.isEmpty()) {
             Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        //check if image wasnt uploaded, only change if new image uploaded
         if (imageUrl != null) {
             artifactref.child("image").setValue(imageUrl);
         }
+        //setting all values in firebase
         artifactref.child("name").setValue(Name);
         artifactref.child("description").setValue(Description);
         artifactref.child("category").setValue(Category);
         artifactref.child("material").setValue(Material);
         artifactref.child("period").setValue(Period);
-
+        artifactref.child("culturalOrigin").setValue(culturalOriginText);
+        artifactref.child("dimensions").setValue(dimensionsText);
+        artifactref.child("conditionReport").setValue(conditionReportText);
+        artifactref.child("currentLocation").setValue(currentLocationText);
+        artifactref.child("accMethod").setValue(accMethodText);
+        artifactref.child("provenance").setValue(provenanceText);
+        artifactref.child("accNum").setValue(accNumText);
+        artifactref.child("notes").setValue(notesText);
+        //toast message to tell user it was successful
         Toast.makeText(
                 getContext(),
                 "Artifact updated successfully",
