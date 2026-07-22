@@ -85,4 +85,8 @@
         <item>Qing Dynasty (1644–1912 CE)</item>
         <item>Republic of China Period (1912–1949 CE)</item>
     </string-array>
+    <!--Supabase Config -->
+    <string name="supabase_url">https://slamakuftowwgtwglyon.supabase.co</string>
+    <string name="supabase_anon_key">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsYW1ha3VmdG93d2d0d2dseW9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMDUwMDEsImV4cCI6MjA5OTY4MTAwMX0.QfM1VFoIeVkf1Fhx8IluskDxbUj97PcZO7170-jeLuI</string>
+    <string name="supabase_image_bucket">artifacts</string>
 </resources>
