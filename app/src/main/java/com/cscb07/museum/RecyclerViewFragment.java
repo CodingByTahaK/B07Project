@@ -161,6 +161,10 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     private String safe(String value) {
-        return value == null ? "" : value;
+        if (value == null) {
+            return "";
+        } else {
+            return value;
+        }
     }
 }
