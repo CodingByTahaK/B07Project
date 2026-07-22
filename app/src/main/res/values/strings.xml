@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">B07 Demo Summer 2024</string>
+    <string name="app_name">artifact manager</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="delete_item">Delete Item</string>
@@ -9,6 +9,23 @@
     <string name="scroller">Scroller</string>
     <string name="spinner">Spinner</string>
     <string name="manage_items">Manage Items</string>
+    <string name="logout">Log out</string>
+
+    <string name="login_title">Login</string>
+    <string name="signup_title">Sign up</string>
+    <string name="username_hint">Username</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="login_button_label">Log In</string>
+    <string name="signup_button_label">Sign up</string>
+    <string name="switch_signup_label">Or sign up now</string>
+    <string name="switch_login_label">Already have an account? Log in</string>
+
+    <string name="invalid_username">Username must not be empty</string>
+    <string name="invalid_email">Incorrect email format</string>
+    <string name="invalid_password">Password must be at least 6 characters</string>
+    <string name="password_not_same">Passwords do not match</string>
 
     <string-array name="categories_array">
         <item>Books</item>
