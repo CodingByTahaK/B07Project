@@ -30,9 +30,11 @@ public class HomeFragment extends Fragment {
         Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
         Button buttonLogout = view.findViewById(R.id.buttonLogout);
         
+        // Hide the visibility by default for managing artifacts
         buttonManageItems.setVisibility(View.GONE);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         
+        // Check the current user's role & allow them to see manage artifacts button IF they are an admin
         if(currentUser != null) {
         	DatabaseReference uReference = FirebaseDatabase.getInstance()
         		.getReference("users")
@@ -77,6 +79,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) { loadFragment(new ManageItemsFragment());}
         });
 
+        // Returns the user to login screen after signing them out
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +93,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    // Swaps displayed fragment
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);

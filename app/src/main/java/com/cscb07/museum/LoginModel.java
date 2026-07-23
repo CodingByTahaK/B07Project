@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginModel implements LoginContract.Model {
     private final FirebaseAuth mAuth;
+
     public LoginModel() {
         mAuth = FirebaseAuth.getInstance();
     }
@@ -18,6 +19,9 @@ public class LoginModel implements LoginContract.Model {
         return mAuth.getCurrentUser();
     }
 
+    // Sign in with email & password:
+    // On Success: the caller is notified
+    // On Failure: error message is passed
     @Override
     public void login(String email, String password, LoginContract.Model.LoginListener listener) {
         mAuth.signInWithEmailAndPassword(email, password)
@@ -30,6 +34,9 @@ public class LoginModel implements LoginContract.Model {
                 });
     }
 
+    // Create a new account with email & password
+    // On Success: Builds and saves a user record with uid, email, username, and "user" role (default)
+    // On Failure: error message is passed
     @Override
     public void signup(String email, String password, String username, LoginContract.Model.LoginListener listener) {
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -61,6 +68,7 @@ public class LoginModel implements LoginContract.Model {
                 });
     }
 
+    // Sign out the user
     @Override
     public void logout() {
         mAuth.signOut();

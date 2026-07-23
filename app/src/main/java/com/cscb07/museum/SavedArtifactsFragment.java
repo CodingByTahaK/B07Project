@@ -31,6 +31,8 @@ public class SavedArtifactsFragment extends Fragment {
     public SavedArtifactsFragment(){
     }
 
+    // Uses Recycler View, initiates the backing list and adapter for saved artifacts
+    // Finds the user's saved artifacts and adds them to the list
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,7 +55,8 @@ public class SavedArtifactsFragment extends Fragment {
             return view;
     }
 
-
+    // Reads the list of saved artifact lot numbers if a user is logged in, else nothing to load
+    // Finds the full artifact details for each saved lot number
     public void loadSavedArtifacts() {
         FirebaseUser user = auth.getCurrentUser();
         
@@ -88,7 +91,7 @@ public class SavedArtifactsFragment extends Fragment {
                 });
     }
 
-
+    // Looks up artifact by lot number and adds them to the list, then refresh Recycler View
     private void getArtifact(String lotNum) {
         data.child("artifacts")
                 .orderByChild("lotNum")
