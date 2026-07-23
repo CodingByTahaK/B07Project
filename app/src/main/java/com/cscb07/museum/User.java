@@ -13,7 +13,7 @@ public class User {
 		savedArtifacts = new ArrayList<>();
 	}
 	
-	public User(String email, String username, String userID, String userType) {
+	public User(String userID, String email, String username, String userType) {
 		this.email = email;
 		this.username = username;
 		this.userID = userID;
@@ -25,6 +25,7 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String newEmail) {
 		this.email = newEmail;
 	}
@@ -33,15 +34,17 @@ public class User {
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String newUsername) {
 		this.username = newUsername;
 	}
 	
 	
-	public String getUserID() {
+	public String getUid() {
 		return userID;
 	}
-	public void setUserID(String newUserID) {
+
+	public void setUid(String newUserID) {
 		this.userID = newUserID;
 	}
 	
@@ -49,6 +52,7 @@ public class User {
 	public String getUserType() {
 		return userType;
 	}
+
 	public void setUserType(String newUserType) {
 		this.userType = newUserType;
 	}
@@ -60,6 +64,7 @@ public class User {
 		}
 		return savedArtifacts;
 	}
+	
 	public void setSavedArtifacts(ArrayList<String> newSavedArtifacts) {
 		this.savedArtifacts = newSavedArtifacts;
 	}
