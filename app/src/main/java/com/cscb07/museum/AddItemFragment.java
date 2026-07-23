@@ -94,11 +94,12 @@ public class AddItemFragment extends Fragment {
         spinnerPeriod.setAdapter(adapterPeriods);
 
 
-        //code snippet from android docs, credit: https://developer.android.com/training/data-storage/shared/photo-picker#java
+        //Code snippet from the docs was used: https://developer.android.com/training/data-storage/shared/photo-picker#java
+
         // Registers a photo picker activity launcher in single-select mode.
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia =registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-            // Callback is invoked after the user selects a media item or closes the
-            // photo picker.
+
+            // Callback is invoked after the user selects a media item or closes the photo picker.
             if (uri != null) {
                 Log.d("PhotoPicker", "Selected URI: " + uri);
                 imgURI = uri;
@@ -177,8 +178,6 @@ public class AddItemFragment extends Fragment {
             return;
         }
 
-//        artifactsRef = db.getReference("artifacts");
-//        String lotNum = artifactsRef.push().getKey();
         Artifact artifact = new Artifact(lotNum, name, description, category1, material, period, culturalOrigin, dimensions, conditionReport, currentLocation, accMethod, provenance, accNum, notes, image);
 
         artifactsRef.child(lotNum).setValue(artifact).addOnCompleteListener(task -> {
