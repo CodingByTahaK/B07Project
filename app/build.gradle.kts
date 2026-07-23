@@ -34,14 +34,13 @@ android {
 }
 
 dependencies {
-
     implementation(platform(libs.compose.bom))
     implementation(libs.activity.compose)
     implementation(libs.appcompat)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.material)
-    implementation(libs.activity)
+    implementation(libs.androidx.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)
     implementation(libs.material3)
