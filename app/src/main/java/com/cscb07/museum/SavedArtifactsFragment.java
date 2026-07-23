@@ -97,10 +97,15 @@ public class SavedArtifactsFragment extends Fragment {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Artifact artifact = null;
 
-                        DataSnapshot artifactSnapshot = snapshot.getChildren().iterator().next();
-                        Artifact artifact = artifactSnapshot.getValue(Artifact.class);
-
+                        if (snapshot.exists()) {
+                            DataSnapshot artifactSnapshot = snapshot.getChildren().iterator().next();
+                            artifact = artifactSnapshot.getValue(Artifact.class);
+                        }
+                        else {
+                            return;
+                        }
                         if (artifact != null) {
                             savedArtifacts.add(artifact);
                             adapter.notifyDataSetChanged();
