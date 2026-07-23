@@ -27,7 +27,7 @@ import java.net.URI;
 
 public class AddItemFragment extends Fragment {
     private EditText editTextName, editTextDescription, editTextCulturalOrigin, editTextDimensions, editTextConditionReport, editTextCurrentLocation, editTextAccMethod, editTextProvenance, editTextAccNum, editTextNotes;
-    private Spinner spinnerCategory, spinnerCategory1, spinnerMaterial, spinnerPeriod;
+    private Spinner spinnerCategory1, spinnerMaterial, spinnerPeriod;
     private Button buttonAdd, buttonUploadImg;
 
     private FirebaseDatabase db;
@@ -48,7 +48,6 @@ public class AddItemFragment extends Fragment {
 
         editTextName = view.findViewById(R.id.editTextName);
         editTextDescription = view.findViewById(R.id.editTextDescription);
-        spinnerCategory = view.findViewById(R.id.spinnerCategory);
         spinnerCategory1 = view.findViewById(R.id.spinnerCategory1);
         spinnerMaterial = view.findViewById(R.id.spinnerMaterial);
         spinnerPeriod = view.findViewById(R.id.spinnerPeriod);
@@ -72,8 +71,6 @@ public class AddItemFragment extends Fragment {
         // Set up the spinner with categories
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.categories_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(adapter);
 
         // Set up the spinner with artifact categories
         ArrayAdapter<CharSequence> adapterCategories = ArrayAdapter.createFromResource(getContext(),
@@ -155,11 +152,9 @@ public class AddItemFragment extends Fragment {
     private void addItem() {
         String name = editTextName.getText().toString().trim();
         String description = editTextDescription.getText().toString().trim();
-
         String category1 = spinnerCategory1.getSelectedItem().toString().toLowerCase();
         String material = spinnerMaterial.getSelectedItem().toString().toLowerCase();
         String period = spinnerPeriod.getSelectedItem().toString().toLowerCase();
-
 
         String culturalOrigin = editTextCulturalOrigin.getText().toString().trim();
         String dimensions = editTextDimensions.getText().toString().trim();
@@ -170,8 +165,6 @@ public class AddItemFragment extends Fragment {
         String accNum = editTextAccNum.getText().toString().trim();
         String notes = editTextNotes.getText().toString().trim();
         String image = imgURL;
-
-        String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
 
         if (name.isEmpty() || description.isEmpty() || category1.isEmpty() || material.isEmpty() || period.isEmpty()) {
             Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
