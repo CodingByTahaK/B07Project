@@ -1,3 +1,9 @@
+/*
+ * RecyclerViewFragment
+ * Version 1.0
+ * July 23, 2026
+ */
+
 package com.cscb07.museum;
 
 import android.os.Bundle;
@@ -6,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -50,31 +55,19 @@ public class RecyclerViewFragment extends Fragment {
         db = FirebaseDatabase.getInstance("https://b07-project-66023-default-rtdb.firebaseio.com/");
         artifactsRef = db.getReference("artifacts");
 
-        //temp
-        fetchArtifactsFromDatabase("anything");
-
-        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String category = parent.getItemAtPosition(position).toString().toLowerCase();
-                fetchArtifactsFromDatabase(category);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
-            }
-        });
+        //Load in all artifacts from Database
+        fetchArtifactsFromDatabase();
 
         return view;
     }
 
-    private void fetchArtifactsFromDatabase(String category) {
-        //artifactsRef = db.getReference("artifacts");
+    private void fetchArtifactsFromDatabase() {
         artifactsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 artifactList.clear();
+
+                //Iterate through children of the artifacts folder
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Artifact artifact = snapshot.getValue(Artifact.class);
                     artifactList.add(artifact);

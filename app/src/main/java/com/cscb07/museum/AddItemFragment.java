@@ -1,3 +1,4 @@
+//will delete this class in the future, as it is leftover from the starter code
 package com.cscb07.museum;
 
 import android.net.Uri;
