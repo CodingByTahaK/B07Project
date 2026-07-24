@@ -23,6 +23,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 public class EditArtifact extends Fragment {
 
     private EditText EditName, EditLotnum, EditDesc, culturalOrigin, dimensions, conditionReport, currentLocation, accMethod, provenance, accNum, notes;
@@ -193,14 +197,16 @@ public class EditArtifact extends Fragment {
         return view;
     }
 
-    private void EditArtifact(){
-        //obtaining values from textboxes
-        String Name = EditName.getText().toString().toLowerCase().trim();;
-        String Lotnum = EditLotnum.getText().toString().trim();;
-        String Period = EditPeriod.getSelectedItem().toString().toLowerCase().trim();;
-        String Material = EditMat.getSelectedItem().toString().toLowerCase().trim();;
+    private void EditArtifact() {
+
+        // obtaining values from textboxes
+        String Name = EditName.getText().toString().toLowerCase().trim();
+        String Lotnum = EditLotnum.getText().toString().trim();
+        String Period = EditPeriod.getSelectedItem().toString().toLowerCase().trim();
+        String Material = EditMat.getSelectedItem().toString().toLowerCase().trim();
         String Category = EditCat.getSelectedItem().toString().toLowerCase().trim();
-        String Description = EditDesc.getText().toString().toLowerCase().trim();;
+        String Description = EditDesc.getText().toString().toLowerCase().trim();
+
         String culturalOriginText = culturalOrigin.getText().toString();
         String dimensionsText = dimensions.getText().toString();
         String conditionReportText = conditionReport.getText().toString();
@@ -210,35 +216,75 @@ public class EditArtifact extends Fragment {
         String accNumText = accNum.getText().toString();
         String notesText = notes.getText().toString();
 
-        artifactref = db.getReference("artifacts").child(Lotnum);
-        //name and description must be filled
-        if (Name.isEmpty() || Description.isEmpty()) {
-            Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
+        // name, description, and lot number can't be empty
+        if (Name.isEmpty() || Description.isEmpty() || Lotnum.isEmpty()) {
+            Toast.makeText(
+                    getContext(),
+                    "Please fill out all required fields",
+                    Toast.LENGTH_SHORT
+            ).show();
             return;
         }
-        //check if image wasnt uploaded, only change if new image uploaded
-        if (imageUrl != null) {
-            artifactref.child("image").setValue(imageUrl);
-        }
-        //setting all values in firebase
-        artifactref.child("name").setValue(Name);
-        artifactref.child("description").setValue(Description);
-        artifactref.child("category").setValue(Category);
-        artifactref.child("material").setValue(Material);
-        artifactref.child("period").setValue(Period);
-        artifactref.child("culturalOrigin").setValue(culturalOriginText);
-        artifactref.child("dimensions").setValue(dimensionsText);
-        artifactref.child("conditionReport").setValue(conditionReportText);
-        artifactref.child("currentLocation").setValue(currentLocationText);
-        artifactref.child("accMethod").setValue(accMethodText);
-        artifactref.child("provenance").setValue(provenanceText);
-        artifactref.child("accNum").setValue(accNumText);
-        artifactref.child("notes").setValue(notesText);
-        //toast message to tell user it was successful
-        Toast.makeText(
-                getContext(),
-                "Artifact updated successfully",
-                Toast.LENGTH_SHORT
-        ).show();
+
+        // find artifact using lotnum
+        artifactref = db.getReference("artifacts").child(Lotnum);
+
+        // check if the artifact exists
+        artifactref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                // do this if artifact exists
+                if (snapshot.exists()) {
+
+                    // only change the image if a new image was uploaded
+                    if (imageUrl != null) {
+                        artifactref.child("image").setValue(imageUrl);
+                    }
+
+                    // send data to firebase
+                    artifactref.child("name").setValue(Name);
+                    artifactref.child("description").setValue(Description);
+                    artifactref.child("category").setValue(Category);
+                    artifactref.child("material").setValue(Material);
+                    artifactref.child("period").setValue(Period);
+                    artifactref.child("culturalOrigin").setValue(culturalOriginText);
+                    artifactref.child("dimensions").setValue(dimensionsText);
+                    artifactref.child("conditionReport").setValue(conditionReportText);
+                    artifactref.child("currentLocation").setValue(currentLocationText);
+                    artifactref.child("accMethod").setValue(accMethodText);
+                    artifactref.child("provenance").setValue(provenanceText);
+                    artifactref.child("accNum").setValue(accNumText);
+                    artifactref.child("notes").setValue(notesText);
+
+                    // Tell user the artifact was successfully updated
+                    Toast.makeText(
+                            getContext(),
+                            "Artifact updated successfully",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                } else {
+
+                    // Artifact does not exist so tell user
+                    Toast.makeText(
+                            getContext(),
+                            "No artifact found with that Lot Number",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+                Toast.makeText(
+                        getContext(),
+                        "Database error: " + error.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
     }
 }
