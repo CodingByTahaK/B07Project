@@ -1,7 +1,5 @@
 package com.cscb07.museum;
 
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +17,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+/**
+ * View implementation for the Login/Signup screen.
+ * Handles user interactions and reflects UI states as directed by the Presenter.
+ */
 public class LoginFragment extends Fragment implements LoginContract.View {
     private TextView title;
     private EditText usernameEditText;
@@ -29,12 +31,16 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     private Button switchButton;
     private LoginPresenter presenter;
 
+    // Toggle to track if we are in Login or Signup mode
     private boolean isLoginMode = true;
 
     public LoginFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Base class for TextWatchers to reduce boilerplate code.
+     */
     public abstract class AfterTextChangedWatcher implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -43,6 +49,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         public void onTextChanged(CharSequence s, int start, int before, int count) {}
     }
 
+    // Specific watchers to trigger real-time validation in the presenter
     public class EmailWatcher extends AfterTextChangedWatcher {
         @Override
         public void afterTextChanged(Editable s) {
@@ -76,6 +83,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login_screen, container, false);
 
+        // Initialize UI components
         title = view.findViewById(R.id.title);
         usernameEditText = view.findViewById(R.id.username_input);
         emailEditText = view.findViewById(R.id.email_input);
@@ -84,14 +92,19 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         switchButton = view.findViewById(R.id.switch_button);
         confirmPassword = view.findViewById(R.id.password_confirm);
 
+        // Initialize Presenter
         presenter = new LoginPresenter(this, new LoginModel());
-        presenter.checkIsLogined();
+        
+        // Check if user is already logged in
+        presenter.checkIsLoggedIn();
 
+        // Attach text change listeners for instant validation feedback
         emailEditText.addTextChangedListener(new EmailWatcher());
         passwordEditText.addTextChangedListener(new PasswordWatcher());
         usernameEditText.addTextChangedListener(new UsernameWatcher());
         confirmPassword.addTextChangedListener(new ConfirmPasswordWatcher());
 
+        // Handle Login/Signup button click
         loginButton.setOnClickListener(v -> {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
@@ -104,6 +117,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
             }
         });
 
+        // Handle toggle between Login and Signup modes
         switchButton.setOnClickListener(v -> {
             if (isLoginMode) {
                 switchToSignup();
@@ -112,6 +126,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
             }
         });
 
+        // Default to Login state
         switchToLogin();
 
         return view;
@@ -146,6 +161,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     public void showPasswordsDoNotMatch() {
         confirmPassword.setError(getString(R.string.password_not_same));
     }
+    
     @Override
     public void clearUsernameError() {
         usernameEditText.setError(null);
@@ -166,6 +182,9 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         confirmPassword.setError(null);
     }
 
+    /**
+     * Updates UI to Login mode: hides username and confirmation fields.
+     */
     @Override
     public void switchToLogin() {
         isLoginMode = true;
@@ -176,6 +195,9 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         confirmPassword.setVisibility(View.GONE);
     }
 
+    /**
+     * Updates UI to Signup mode: shows username and confirmation fields.
+     */
     @Override
     public void switchToSignup() {
         isLoginMode = false;
@@ -185,6 +207,10 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         usernameEditText.setVisibility(View.VISIBLE);
         confirmPassword.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * Transitions to the HomeFragment upon successful login/signup.
+     */
     @Override
     public void navigateToHome() {
         Fragment homeFragment = new HomeFragment();
