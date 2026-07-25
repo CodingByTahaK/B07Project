@@ -1,3 +1,4 @@
+//will delete this class in the future, as it is leftover from the starter code
 package com.cscb07.museum;
 
 import android.net.Uri;
@@ -26,7 +27,7 @@ import java.net.URI;
 
 public class AddItemFragment extends Fragment {
     private EditText editTextName, editTextDescription, editTextCulturalOrigin, editTextDimensions, editTextConditionReport, editTextCurrentLocation, editTextAccMethod, editTextProvenance, editTextAccNum, editTextNotes;
-    private Spinner spinnerCategory, spinnerCategory1, spinnerMaterial, spinnerPeriod;
+    private Spinner spinnerCategory1, spinnerMaterial, spinnerPeriod;
     private Button buttonAdd, buttonUploadImg;
 
     private FirebaseDatabase db;
@@ -47,7 +48,6 @@ public class AddItemFragment extends Fragment {
 
         editTextName = view.findViewById(R.id.editTextName);
         editTextDescription = view.findViewById(R.id.editTextDescription);
-        spinnerCategory = view.findViewById(R.id.spinnerCategory);
         spinnerCategory1 = view.findViewById(R.id.spinnerCategory1);
         spinnerMaterial = view.findViewById(R.id.spinnerMaterial);
         spinnerPeriod = view.findViewById(R.id.spinnerPeriod);
@@ -71,8 +71,6 @@ public class AddItemFragment extends Fragment {
         // Set up the spinner with categories
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.categories_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(adapter);
 
         // Set up the spinner with artifact categories
         ArrayAdapter<CharSequence> adapterCategories = ArrayAdapter.createFromResource(getContext(),
@@ -93,11 +91,12 @@ public class AddItemFragment extends Fragment {
         spinnerPeriod.setAdapter(adapterPeriods);
 
 
-        //code snippet from android docs, credit: https://developer.android.com/training/data-storage/shared/photo-picker#java
+        //Code snippet from the docs was used: https://developer.android.com/training/data-storage/shared/photo-picker#java
+
         // Registers a photo picker activity launcher in single-select mode.
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia =registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-            // Callback is invoked after the user selects a media item or closes the
-            // photo picker.
+
+            // Callback is invoked after the user selects a media item or closes the photo picker.
             if (uri != null) {
                 Log.d("PhotoPicker", "Selected URI: " + uri);
                 imgURI = uri;
@@ -153,11 +152,9 @@ public class AddItemFragment extends Fragment {
     private void addItem() {
         String name = editTextName.getText().toString().trim();
         String description = editTextDescription.getText().toString().trim();
-
         String category1 = spinnerCategory1.getSelectedItem().toString().toLowerCase();
         String material = spinnerMaterial.getSelectedItem().toString().toLowerCase();
         String period = spinnerPeriod.getSelectedItem().toString().toLowerCase();
-
 
         String culturalOrigin = editTextCulturalOrigin.getText().toString().trim();
         String dimensions = editTextDimensions.getText().toString().trim();
@@ -169,15 +166,11 @@ public class AddItemFragment extends Fragment {
         String notes = editTextNotes.getText().toString().trim();
         String image = imgURL;
 
-        String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
-
         if (name.isEmpty() || description.isEmpty() || category1.isEmpty() || material.isEmpty() || period.isEmpty()) {
             Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-//        artifactsRef = db.getReference("artifacts");
-//        String lotNum = artifactsRef.push().getKey();
         Artifact artifact = new Artifact(lotNum, name, description, category1, material, period, culturalOrigin, dimensions, conditionReport, currentLocation, accMethod, provenance, accNum, notes, image);
 
         artifactsRef.child(lotNum).setValue(artifact).addOnCompleteListener(task -> {

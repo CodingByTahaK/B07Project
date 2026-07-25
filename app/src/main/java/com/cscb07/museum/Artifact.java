@@ -22,7 +22,7 @@ public class Artifact {
     public Artifact(){
     }
 
-    //!!note for the time being, im just making lotNum into a String,as then I can use .getkey() to generate a string
+    //!!note for the time being, im just making lotNum into a String,as then I can use .getkey() to generate a string; will check if it must be a number with the TA later
     public Artifact(String lotNum, String name, String description, String category, String material, String period, String culturalOrigin, String dimensions, String conditionReport, String location, String acqMethod, String provenance, String accNum, String notes, String image) {
         this.lotNum = lotNum;
         this.name = name;
@@ -44,7 +44,6 @@ public class Artifact {
     public String getLotNum() {
         return lotNum;
     }
-
     public void setLotNum(String lotNum) {
         this.lotNum = lotNum;
     }
@@ -52,7 +51,6 @@ public class Artifact {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -60,7 +58,6 @@ public class Artifact {
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -68,7 +65,6 @@ public class Artifact {
     public String getCategory() {
         return category;
     }
-
     public void setCategory(String category) {
         this.category = category;
     }
@@ -76,7 +72,6 @@ public class Artifact {
     public String getMaterial() {
         return material;
     }
-
     public void setMaterial(String material) {
         this.material = material;
     }
@@ -84,7 +79,6 @@ public class Artifact {
     public String getPeriod() {
         return period;
     }
-
     public void setPeriod(String period) {
         this.period = period;
     }
@@ -92,7 +86,6 @@ public class Artifact {
     public String getCulturalOrigin() {
         return culturalOrigin;
     }
-
     public void setCulturalOrigin(String culturalOrigin) {
         this.culturalOrigin = culturalOrigin;
     }
@@ -100,7 +93,6 @@ public class Artifact {
     public String getDimensions() {
         return dimensions;
     }
-
     public void setDimensions(String dimensions) {
         this.dimensions = dimensions;
     }
@@ -108,7 +100,6 @@ public class Artifact {
     public String getConditionReport() {
         return conditionReport;
     }
-
     public void setConditionReport(String conditionReport) {
         this.conditionReport = conditionReport;
     }
@@ -116,7 +107,6 @@ public class Artifact {
     public String getLocation() {
         return location;
     }
-
     public void setLocation(String location) {
         this.location = location;
     }
@@ -124,7 +114,6 @@ public class Artifact {
     public String getAcqMethod() {
         return acqMethod;
     }
-
     public void setAcqMethod(String acqMethod) {
         this.acqMethod = acqMethod;
     }
@@ -132,7 +121,6 @@ public class Artifact {
     public String getProvenance() {
         return provenance;
     }
-
     public void setProvenance(String provenance) {
         this.provenance = provenance;
     }
@@ -140,7 +128,6 @@ public class Artifact {
     public String getAccNum() {
         return accNum;
     }
-
     public void setAccNum(String accNum) {
         this.accNum = accNum;
     }
@@ -148,7 +135,6 @@ public class Artifact {
     public String getNotes() {
         return notes;
     }
-
     public void setNotes(String notes) {
         this.notes = notes;
     }
@@ -156,7 +142,6 @@ public class Artifact {
     public String getImage() {
         return image;
     }
-
     public void setImage(String image) {
         this.image = image;
     }

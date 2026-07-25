@@ -10,8 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class HomeFragment extends Fragment {
     @Nullable
@@ -24,7 +28,30 @@ public class HomeFragment extends Fragment {
         Button buttonSpinner = view.findViewById(R.id.buttonSpinner);
         Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
         Button buttonLogout = view.findViewById(R.id.buttonLogout);
-
+        
+        // Hide the visibility by default for managing artifacts
+        buttonManageItems.setVisibility(View.GONE);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        
+        // Check the current user's role & allow them to see manage artifacts button IF they are an admin
+        if(currentUser != null) {
+        	DatabaseReference uReference = FirebaseDatabase.getInstance()
+        		.getReference("users")
+        		.child(currentUser.getUid());
+        		
+        	uReference.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>(){
+        		@Override
+        		public void onSuccess(DataSnapshot snap) {
+        			User user = snap.getValue(User.class);
+        			
+        			if (user != null && user.checkAdmin() == true) {
+        				buttonManageItems.setVisibility(View.VISIBLE);
+        			}
+        		}
+        	});
+        	
+        }
+        
         buttonRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,19 +78,20 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) { loadFragment(new ManageItemsFragment());}
         });
 
+        // Returns the user to login screen after signing them out
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
                 loadFragment(new LoginFragment());
-                getActivity().finish();
             }
         });
 
         return view;
     }
 
+    // Swaps displayed fragment
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
