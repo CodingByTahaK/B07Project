@@ -3,9 +3,13 @@ package com.cscb07.museum;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ArtifactViewHolder> {
@@ -26,10 +30,10 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
     public void onBindViewHolder(@NonNull ArtifactViewHolder holder, int position) {
         Artifact artifact = artifactList.get(position);
         holder.textViewName.setText(artifact.getName());
-        holder.textViewDescription.setText(artifact.getDescription());
         holder.textViewCategory.setText(artifact.getCategory());
         holder.textViewMaterial.setText(artifact.getMaterial());
         holder.textViewPeriod.setText(artifact.getPeriod());
+        Picasso.get().load(artifact.getImage()).into(holder.imageViewPic);
     }
 
     @Override
@@ -38,15 +42,16 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
     }
 
     public static class ArtifactViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewName, textViewDescription, textViewCategory, textViewMaterial, textViewPeriod;
+        TextView textViewName, textViewCategory, textViewMaterial, textViewPeriod;
+        ImageView imageViewPic;
 
         public ArtifactViewHolder(@NonNull View artifactView) {
             super(artifactView);
             textViewName = artifactView.findViewById(R.id.textViewName);
-            textViewDescription = artifactView.findViewById(R.id.textViewCategory);
-            textViewCategory = artifactView.findViewById(R.id.textViewMaterial);
-            textViewMaterial = artifactView.findViewById(R.id.textViewDescription);
+            textViewCategory = artifactView.findViewById(R.id.textViewCategory);
+            textViewMaterial = artifactView.findViewById(R.id.textViewMaterial);
             textViewPeriod = artifactView.findViewById(R.id.textViewPeriod);
+            imageViewPic = artifactView.findViewById(R.id.imageView);
         }
     }
 }

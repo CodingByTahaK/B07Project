@@ -44,7 +44,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             textViewTitle = itemView.findViewById(R.id.textViewName);
             textViewAuthor = itemView.findViewById(R.id.textViewCategory);
             textViewGenre = itemView.findViewById(R.id.textViewMaterial);
-            textViewDescription = itemView.findViewById(R.id.textViewDescription);
+            textViewDescription = itemView.findViewById(R.id.textViewName);
         }
     }
 }

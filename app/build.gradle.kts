@@ -55,6 +55,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation(libs.okhttp3) //old: 4.0.0
     implementation(libs.activity.v1130) //old 1.9.0
+    implementation("com.squareup.picasso:picasso:2.8")
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.test.manifest)
     debugImplementation(libs.ui.tooling)
