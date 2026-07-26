@@ -6,4 +6,6 @@
     </style>
 
     <style name="Theme.B07DemoSummer2024" parent="Base.Theme.B07DemoSummer2024" />
+
+    <style name="Theme.MyApplication" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

@@ -1,21 +1,40 @@
 {
   "project_info": {
-    "project_number": "103450168850",
-    "project_id": "b07-demo-summer-2024",
-    "storage_bucket": "b07-demo-summer-2024.appspot.com"
+    "project_number": "675456202030",
+    "project_id": "b07-project-66023",
+    "storage_bucket": "b07-project-66023.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:103450168850:android:18be49669e0000df0552cb",
+        "mobilesdk_app_id": "1:675456202030:android:180469ba156182283076bf",
         "android_client_info": {
-          "package_name": "com.example.b07demosummer2024"
+          "package_name": "com.cscb07.museum"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCNPIMxlsDkuYk5s1-Uycc9s8Hqz2YKIDs"
+          "current_key": "AIzaSyD8bI0k63Z6NyiSiNWC0eYN0YYstgH1hfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675456202030:android:c8ddee206b26392a3076bf",
+        "android_client_info": {
+          "package_name": "com.example.artifactmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8bI0k63Z6NyiSiNWC0eYN0YYstgH1hfk"
         }
       ],
       "services": {
