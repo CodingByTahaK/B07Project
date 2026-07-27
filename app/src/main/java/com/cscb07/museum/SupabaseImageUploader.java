@@ -1,3 +1,10 @@
+/*
+ * SupabaseImageUploader
+ * Version 1.0
+ * July 23, 2026
+ * This helper class was provided through the 2026 CSCB07 Quercus
+ */
+
 package com.cscb07.museum;
 
 import android.content.ContentResolver;

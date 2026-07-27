@@ -18,6 +18,8 @@ public class Artifact {
     private String accNum; //later change to int
     private String notes;
     private String image; //this is a uri
+    private boolean isLiked = false;
+    private int likeCount = 0;
 
     public Artifact(){
     }
@@ -144,5 +146,26 @@ public class Artifact {
     }
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public void toggleLike() {
+        isLiked = !isLiked;
+        likeCount += isLiked ? 1 : -1;
     }
 }

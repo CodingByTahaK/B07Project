@@ -4,6 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="delete_item">Delete Item</string>
     <string name="add_item">Add Item</string>
+    <string name="saved_items">Saved Items</string>
     <string name="back">Back</string>
     <string name="recyclerview">RecyclerView</string>
     <string name="scroller">Scroller</string>
@@ -26,6 +27,18 @@
     <string name="invalid_email">Incorrect email format</string>
     <string name="invalid_password">Password must be at least 6 characters</string>
     <string name="password_not_same">Passwords do not match</string>
+
+    <string name="name_hint">Name</string>
+    <string name="description_hint">Description</string>
+    <string name="cultural_origin_hint">Cultural Origin</string>
+    <string name="dimensions_hint">Dimensions</string>
+    <string name="condition_report_hint">Condition Report</string>
+    <string name="current_location_hint">Current Location</string>
+    <string name="Acquisition_method_hint">Acquisition Method</string>
+    <string name="Accesnion_num_hint">Accension Number</string>
+    <string name="provenance_hint">Provenance</string>
+    <string name="notes_hint">Notes</string>
+    <string name="upload_image_hint">Upload Image</string>
 
     <string-array name="categories_array">
         <item>Books</item>
@@ -85,6 +98,7 @@
         <item>Qing Dynasty (1644–1912 CE)</item>
         <item>Republic of China Period (1912–1949 CE)</item>
     </string-array>
+
     <!--Supabase Config -->
     <string name="supabase_url">https://slamakuftowwgtwglyon.supabase.co</string>
     <string name="supabase_anon_key">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsYW1ha3VmdG93d2d0d2dseW9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMDUwMDEsImV4cCI6MjA5OTY4MTAwMX0.QfM1VFoIeVkf1Fhx8IluskDxbUj97PcZO7170-jeLuI</string>
