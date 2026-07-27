@@ -7,12 +7,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+import android.widget.ImageButton;
+
+import org.jetbrains.annotations.UnknownNullability;
 
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ArtifactViewHolder> {
     private List<Artifact> artifactList;
+    private LikeClick likeClickListener;
+    public interface LikeClick {
+        void onLikeClick(Artifact artifact, int position);
+    }
 
     public ArtifactAdapter(List<Artifact> artifactList) {
         this.artifactList = artifactList;
+    }
+
+    public ArtifactAdapter(List<Artifact> artifactList, LikeClick likeClickListener){
+        this.artifactList = artifactList;
+        this.likeClickListener = likeClickListener;
     }
 
     @NonNull
@@ -30,6 +42,35 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         holder.textViewCategory.setText(artifact.getCategory());
         holder.textViewMaterial.setText(artifact.getMaterial());
         holder.textViewPeriod.setText(artifact.getPeriod());
+
+        holder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                boolean newLikeState = !artifact.isLiked();
+                artifact.setLiked(newLikeState);
+
+                int newCount;
+                if (newLikeState) {
+                    newCount = artifact.getLikeCount() + 1;
+                } else {
+                    newCount = artifact.getLikeCount() - 1;
+                }
+                artifact.setLikeCount(newCount);
+                likebutton(holder, artifact);
+                if (likeClickListener != null) {
+                    likeClickListener.onLikeClick(artifact, position);
+                }
+            }
+        });
+    }
+    private void likebutton(ArtifactViewHolder holder, @UnknownNullability Artifact item) {
+        if (item.isLiked()) {
+            holder.btnLike.setImageResource(R.drawable.ic_heart_filled);
+        } else {
+            holder.btnLike.setImageResource(R.drawable.ic_heart_outline);
+        }
+        holder.tvLikeCount.setText(String.valueOf(item.getLikeCount()));
     }
 
     @Override
@@ -39,6 +80,8 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
 
     public static class ArtifactViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName, textViewDescription, textViewCategory, textViewMaterial, textViewPeriod;
+        ImageButton btnLike;
+        TextView tvLikeCount;
 
         public ArtifactViewHolder(@NonNull View artifactView) {
             super(artifactView);
@@ -47,6 +90,8 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
             textViewCategory = artifactView.findViewById(R.id.textViewMaterial);
             textViewMaterial = artifactView.findViewById(R.id.textViewDescription);
             textViewPeriod = artifactView.findViewById(R.id.textViewPeriod);
+            btnLike = itemView.findViewById(R.id.btnLike);
+            tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
         }
     }
 }
