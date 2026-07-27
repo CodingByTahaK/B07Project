@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -80,6 +81,14 @@ public class RecyclerViewFragment extends Fragment {
         spinnerCategory.setAdapter(adapter);
 
         searchEditText = view.findViewById(R.id.searchEditText);
+
+        Button savedArtifactsButton =
+                view.findViewById(R.id.savedArtifactsButton);
+
+        savedArtifactsButton.setOnClickListener(clickedView -> {
+            MainActivity mainActivity = (MainActivity) requireActivity();
+            mainActivity.openSavedArtifacts();
+        });
 
         artifactList = new ArrayList<>();
         allArtifacts = new ArrayList<>();
