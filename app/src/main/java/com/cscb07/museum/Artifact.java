@@ -1,6 +1,9 @@
 package com.cscb07.museum;
+import android.os.Parcel;
+import android.os.Parcelable;
+import androidx.annotation.NonNull;
 
-public class Artifact {
+public class Artifact implements Parcelable {
 
     //Mandatory Fields
     private String lotNum;
@@ -40,6 +43,36 @@ public class Artifact {
         this.notes = notes;
         this.image=image;
     }
+
+    protected Artifact(Parcel in) {
+        lotNum = in.readString();
+        name = in.readString();
+        description = in.readString();
+        category = in.readString();
+        material = in.readString();
+        period = in.readString();
+        culturalOrigin = in.readString();
+        dimensions = in.readString();
+        conditionReport = in.readString();
+        location = in.readString();
+        acqMethod = in.readString();
+        provenance = in.readString();
+        accNum = in.readString();
+        notes = in.readString();
+        image = in.readString();
+    }
+
+    public static final Creator<Artifact> CREATOR = new Creator<Artifact>() {
+        @Override
+        public Artifact createFromParcel(Parcel in) {
+            return new Artifact(in);
+        }
+
+        @Override
+        public Artifact[] newArray(int size) {
+            return new Artifact[size];
+        }
+    };
 
     public String getLotNum() {
         return lotNum;
@@ -144,5 +177,30 @@ public class Artifact {
     }
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(lotNum);
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeString(category);
+        parcel.writeString(material);
+        parcel.writeString(period);
+        parcel.writeString(culturalOrigin);
+        parcel.writeString(dimensions);
+        parcel.writeString(conditionReport);
+        parcel.writeString(location);
+        parcel.writeString(acqMethod);
+        parcel.writeString(provenance);
+        parcel.writeString(accNum);
+        parcel.writeString(notes);
+        parcel.writeString(image);
+
     }
 }

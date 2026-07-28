@@ -6,6 +6,7 @@
 
 package com.cscb07.museum;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,19 +32,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class RecyclerViewFragment extends Fragment {
+public class RecyclerViewFragment extends Fragment implements RecyclerExpandedViewInterface{
+
 
     private RecyclerView recyclerView;
     private ArtifactAdapter artifactAdapter;
-
     private List<Artifact> artifactList;
     private List<Artifact> allArtifacts;
-
-    private Spinner spinnerCategory;
     private EditText searchEditText;
-
     private FirebaseDatabase db;
     private DatabaseReference artifactsRef;
+
 
     @Nullable
     @Override
@@ -64,8 +62,6 @@ public class RecyclerViewFragment extends Fragment {
                 new LinearLayoutManager(getContext())
         );
 
-        spinnerCategory = view.findViewById(R.id.spinnerCategory);
-
         ArrayAdapter<CharSequence> adapter =
                 ArrayAdapter.createFromResource(
                         getContext(),
@@ -77,14 +73,12 @@ public class RecyclerViewFragment extends Fragment {
                 android.R.layout.simple_spinner_dropdown_item
         );
 
-        spinnerCategory.setAdapter(adapter);
-
         searchEditText = view.findViewById(R.id.searchEditText);
 
         artifactList = new ArrayList<>();
         allArtifacts = new ArrayList<>();
 
-        artifactAdapter = new ArtifactAdapter(artifactList);
+        artifactAdapter = new ArtifactAdapter(artifactList, getContext());
         recyclerView.setAdapter(artifactAdapter);
 
         db = FirebaseDatabase.getInstance(
@@ -92,9 +86,7 @@ public class RecyclerViewFragment extends Fragment {
         );
 
         artifactsRef = db.getReference("artifacts");
-
         fetchArtifactsFromDatabase();
-
         searchEditText.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -217,5 +209,20 @@ public class RecyclerViewFragment extends Fragment {
         } else {
             return value;
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    //on clicking an artifact, a new screen is opened sent via intents, sending artifact's info with bundle
+    @Override
+    public void onArtifactClick(int position) {
+        Intent send = new Intent(getContext(), ExpandedView.class);
+        //Probably where the issue originates
+        send.putExtra("select_artifact", artifactList.get(position));
+        startActivity(send);
     }
 }

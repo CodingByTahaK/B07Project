@@ -1,5 +1,8 @@
 package com.cscb07.museum;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +17,13 @@ import java.util.List;
 
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ArtifactViewHolder> {
     private List<Artifact> artifactList;
+    Context context;
+    //private final RecyclerExpandedViewInterface recyclerExpandedViewInterface;
 
-    public ArtifactAdapter(List<Artifact> artifactList) {
+    public ArtifactAdapter(List<Artifact> artifactList, Context context) {
+        this.context = context;
         this.artifactList = artifactList;
+        //this.fragmentManager = fragmentManager;
     }
 
     @NonNull
@@ -34,6 +41,18 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         holder.textViewMaterial.setText(artifact.getMaterial());
         holder.textViewPeriod.setText(artifact.getPeriod());
         Picasso.get().load(artifact.getImage()).into(holder.imageViewPic);
+
+        holder.imageViewPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent send = new Intent(context, ExpandedView.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("artifact", artifactList.get(position));
+                send.putExtra("artifact",bundle);
+                context.startActivity(send);
+            }
+        });
+
     }
 
     @Override
@@ -52,6 +71,20 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
             textViewMaterial = artifactView.findViewById(R.id.textViewMaterial);
             textViewPeriod = artifactView.findViewById(R.id.textViewPeriod);
             imageViewPic = artifactView.findViewById(R.id.imageView);
+
+            //attching onClick listener to each artifact
+//            artifactView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if (recyclerExpandedViewInterface != null){
+//                        int position  = getAdapterPosition();
+//
+//                        if(position != RecyclerView.NO_POSITION){
+//                            recyclerExpandedViewInterface.onArtifactClick(position);
+//                        }
+//                    }
+//                }
+//            });
         }
     }
 }

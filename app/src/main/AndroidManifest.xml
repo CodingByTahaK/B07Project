@@ -40,6 +40,9 @@
             android:name=".RecyclerViewFragment"
             android:exported="false" />
         <activity
+            android:name=".ExpandedView"
+            android:exported="false" />
+        <activity
             android:name=".HomeFragment"
             android:exported="false" />
         <activity

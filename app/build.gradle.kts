@@ -36,7 +36,12 @@ android {
 dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.activity.compose)
-    implementation(libs.appcompat)
+
+    implementation("androidx.appcompat:appcompat:1.7.1+")
+    // For loading and tinting drawables on older versions of the platform
+    implementation("androidx.appcompat:appcompat-resources:1.7.1+")
+
+    //implementation(libs.appcompat)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.material)
@@ -59,4 +64,6 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.test.manifest)
     debugImplementation(libs.ui.tooling)
+    implementation("org.parceler:parceler-api:1.1.12")
+    annotationProcessor("org.parceler:parceler:1.1.12")
 }

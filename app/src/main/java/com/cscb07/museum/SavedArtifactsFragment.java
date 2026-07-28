@@ -44,7 +44,7 @@ public class SavedArtifactsFragment extends Fragment {
             );
             
             savedArtifacts = new ArrayList<>();
-            adapter = new ArtifactAdapter(savedArtifacts);
+            //adapter = new ArtifactAdapter(savedArtifacts);
             recView.setAdapter(adapter);
 
             auth = FirebaseAuth.getInstance();
