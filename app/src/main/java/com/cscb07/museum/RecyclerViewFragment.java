@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         artifactList = new ArrayList<>();
         allArtifacts = new ArrayList<>();
 
-        artifactAdapter = new ArtifactAdapter(artifactList, getContext());
+        artifactAdapter = new ArtifactAdapter(artifactList, getContext(), this);
         recyclerView.setAdapter(artifactAdapter);
 
         db = FirebaseDatabase.getInstance(
@@ -222,7 +223,8 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
     public void onArtifactClick(int position) {
         Intent send = new Intent(getContext(), ExpandedView.class);
         //Probably where the issue originates
-        send.putExtra("select_artifact", artifactList.get(position));
+        Log.d("here's inside of send: ", artifactList.get(position).getName());
+        send.putExtra("selected_artifact", artifactList.get(position));
         startActivity(send);
     }
 }

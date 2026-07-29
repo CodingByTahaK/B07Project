@@ -18,19 +18,19 @@ import java.util.List;
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ArtifactViewHolder> {
     private List<Artifact> artifactList;
     Context context;
-    //private final RecyclerExpandedViewInterface recyclerExpandedViewInterface;
+    private final RecyclerExpandedViewInterface recyclerExpandedViewInterface;
 
-    public ArtifactAdapter(List<Artifact> artifactList, Context context) {
+    public ArtifactAdapter(List<Artifact> artifactList, Context context, RecyclerExpandedViewInterface recyclerExpandedViewInterface) {
         this.context = context;
         this.artifactList = artifactList;
-        //this.fragmentManager = fragmentManager;
+        this.recyclerExpandedViewInterface = recyclerExpandedViewInterface;
     }
 
     @NonNull
     @Override
     public ArtifactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_item_adapater, parent, false);
-        return new ArtifactViewHolder(view);
+        return new ArtifactViewHolder(view, recyclerExpandedViewInterface);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
             public void onClick(View view) {
                 Intent send = new Intent(context, ExpandedView.class);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("artifact", artifactList.get(position));
-                send.putExtra("artifact",bundle);
+                bundle.putParcelable("select_artifact", artifactList.get(position));
+                send.putExtra("select_artifact",bundle);
                 context.startActivity(send);
             }
         });
@@ -64,7 +64,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         TextView textViewName, textViewCategory, textViewMaterial, textViewPeriod;
         ImageView imageViewPic;
 
-        public ArtifactViewHolder(@NonNull View artifactView) {
+        public ArtifactViewHolder(@NonNull View artifactView, RecyclerExpandedViewInterface recyclerExpandedViewInterface) {
             super(artifactView);
             textViewName = artifactView.findViewById(R.id.textViewName);
             textViewCategory = artifactView.findViewById(R.id.textViewCategory);
@@ -73,18 +73,18 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
             imageViewPic = artifactView.findViewById(R.id.imageView);
 
             //attching onClick listener to each artifact
-//            artifactView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    if (recyclerExpandedViewInterface != null){
-//                        int position  = getAdapterPosition();
-//
-//                        if(position != RecyclerView.NO_POSITION){
-//                            recyclerExpandedViewInterface.onArtifactClick(position);
-//                        }
-//                    }
-//                }
-//            });
+            artifactView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerExpandedViewInterface != null){
+                        int position  = getAdapterPosition();
+
+                        if(position != RecyclerView.NO_POSITION){
+                            recyclerExpandedViewInterface.onArtifactClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
