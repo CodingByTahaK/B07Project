@@ -6,7 +6,7 @@ public class User {
 	private String email;
 	private String username;
 	private String userID;
-	private String userType;
+	private String userType = "user"; // avoid NullPointerException
 	private ArrayList<String> savedArtifacts;
 	
 	public User() {

@@ -1,5 +1,19 @@
 package com.cscb07.museum;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
+
 public class Artifact {
 
     //Mandatory Fields
@@ -18,14 +32,22 @@ public class Artifact {
     private String accNum; //later change to int
     private String notes;
     private String image; //this is a uri
-    private boolean isLiked = false;
     private int likeCount = 0;
+    private boolean isLiked = false;
+    private boolean isSaved = false;
+    private FirebaseUser user;
+
+    // Listener for UI to react when Firebase like data is loaded
+    private Runnable onStatusLoaded;
+    private boolean isStatusLoaded = false;
 
     public Artifact(){
+        this.user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     //!!note for the time being, im just making lotNum into a String,as then I can use .getkey() to generate a string; will check if it must be a number with the TA later
     public Artifact(String lotNum, String name, String description, String category, String material, String period, String culturalOrigin, String dimensions, String conditionReport, String location, String acqMethod, String provenance, String accNum, String notes, String image) {
+        this();
         this.lotNum = lotNum;
         this.name = name;
         this.description = description;
@@ -40,7 +62,46 @@ public class Artifact {
         this.provenance = provenance;
         this.accNum = accNum;
         this.notes = notes;
-        this.image=image;
+        this.image = image;
+        loadUserStatus();
+    }
+
+    public void setOnStatusLoadedListener(Runnable listener) {
+        this.onStatusLoaded = listener;
+        if (isStatusLoaded && onStatusLoaded != null) {
+            onStatusLoaded.run();
+        }
+    }
+
+    public void loadUserStatus() {
+        if (lotNum == null) return;
+        this.user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            DatabaseReference userArtifactRef = FirebaseDatabase.getInstance().getReference("/users/" + user.getUid() + "/likedAndSavedArtifacts/" + lotNum);
+            userArtifactRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        Boolean liked = snapshot.child("liked").getValue(Boolean.class);
+                        if (liked != null) {
+                            isLiked = liked;
+                        }
+                        Boolean saved = snapshot.child("saved").getValue(Boolean.class);
+                        if (saved != null) {
+                            isSaved = saved;
+                        }
+                    }
+                    isStatusLoaded = true;
+                    if (onStatusLoaded != null) {
+                        onStatusLoaded.run();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
     }
 
     public String getLotNum() {
@@ -148,13 +209,18 @@ public class Artifact {
         this.image = image;
     }
 
-    public boolean isLiked() {
+    public boolean getIsLiked() {
         return isLiked;
     }
 
     public void setLiked(boolean liked) {
         isLiked = liked;
     }
+
+    public boolean getIsSaved() {
+        return isSaved;
+    }
+
 
     public int getLikeCount() {
         return likeCount;
@@ -164,8 +230,40 @@ public class Artifact {
         this.likeCount = likeCount;
     }
 
-    public void toggleLike() {
+    public void toggleLike(Consumer<String> errorHandler, Runnable onSuccess) {
+        this.user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            errorHandler.accept("Please login to like artifacts");
+            return;
+        }
+
+        // Toggle locally
         isLiked = !isLiked;
-        likeCount += isLiked ? 1 : -1;
+        if (isLiked) {
+            likeCount++;
+        } else {
+            likeCount--;
+        }
+
+        // Apply to database
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("/artifacts/" + lotNum + "/likeCount", likeCount);
+        updates.put("/users/" + user.getUid() + "/likedAndSavedArtifacts/" + lotNum + "/liked", isLiked);
+
+        ref.updateChildren(updates, (error, ref1) -> {
+            if (error != null) {
+                // Revert locally on error
+                isLiked = !isLiked;
+                if (isLiked) {
+                    likeCount++;
+                } else {
+                    likeCount--;
+                }
+                errorHandler.accept(error.getMessage());
+            } else {
+                onSuccess.run();
+            }
+        });
     }
 }
