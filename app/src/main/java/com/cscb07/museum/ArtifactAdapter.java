@@ -23,9 +23,6 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
     Context context;
     private final RecyclerExpandedViewInterface recyclerExpandedViewInterface;
     private LikeClick likeClickListener;
-    public interface LikeClick {
-        void onLikeClick(Artifact artifact, int position);
-    }
 
     public ArtifactAdapter(List<Artifact> artifactList, Context context, RecyclerExpandedViewInterface recyclerExpandedViewInterface, LikeClick likeClickListener) {
         this.context = context;

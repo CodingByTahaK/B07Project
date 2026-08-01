@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class RecyclerViewFragment extends Fragment implements RecyclerExpandedViewInterface{
+public class RecyclerViewFragment extends Fragment implements RecyclerExpandedViewInterface, LikeClick{
 
 
     private RecyclerView recyclerView;
@@ -88,7 +88,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         artifactList = new ArrayList<>();
         allArtifacts = new ArrayList<>();
 
-        artifactAdapter = new ArtifactAdapter(artifactList, getContext(), this);
+        artifactAdapter = new ArtifactAdapter(artifactList, getContext(), this, this);
         recyclerView.setAdapter(artifactAdapter);
 
         db = FirebaseDatabase.getInstance(
@@ -234,5 +234,10 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         Log.d("here's inside of send: ", artifactList.get(position).getName());
         send.putExtra("selected_artifact", artifactList.get(position));
         startActivity(send);
+    }
+
+    @Override
+    public void onLikeClick(Artifact artifact, int position) {
+
     }
 }
