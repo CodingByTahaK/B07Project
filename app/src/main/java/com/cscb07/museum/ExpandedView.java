@@ -92,9 +92,9 @@ public class ExpandedView extends AppCompatActivity {
         textDimensionsLabel.setText("Dimensions");
         textConditionReportLabel.setText("Condition Report");
         textLocationLabel.setText("Location");
-        textAcqMethodLabel.setText("Acuisition Method");
+        textAcqMethodLabel.setText("Acquisition Method");
         textProvenanceLabel.setText("Provenance");
-        textAccNumLabel.setText("Accesnsion Number");
+        textAccNumLabel.setText("Accession Number");
         textNotesLabel.setText("Notes");
 
 

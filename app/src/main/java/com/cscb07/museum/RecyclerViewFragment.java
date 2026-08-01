@@ -222,7 +222,6 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
     @Override
     public void onArtifactClick(int position) {
         Intent send = new Intent(getContext(), ExpandedView.class);
-        //Probably where the issue originates
         Log.d("here's inside of send: ", artifactList.get(position).getName());
         send.putExtra("selected_artifact", artifactList.get(position));
         startActivity(send);

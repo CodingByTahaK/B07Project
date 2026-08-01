@@ -41,18 +41,6 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         holder.textViewMaterial.setText(artifact.getMaterial());
         holder.textViewPeriod.setText(artifact.getPeriod());
         Picasso.get().load(artifact.getImage()).into(holder.imageViewPic);
-
-//        holder.imageViewPic.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent send = new Intent(context, ExpandedView.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("select_artifact", artifactList.get(position));
-//                send.putExtra("select_artifact",bundle);
-//                context.startActivity(send);
-//            }
-//        });
-
     }
 
     @Override
@@ -72,7 +60,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
             textViewPeriod = artifactView.findViewById(R.id.textViewPeriod);
             imageViewPic = artifactView.findViewById(R.id.imageView);
 
-            //attching onClick listener to each artifact
+            //attaching onClick listener to each artifact
             artifactView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
