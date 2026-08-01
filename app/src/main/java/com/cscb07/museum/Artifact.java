@@ -18,13 +18,16 @@ public class Artifact implements Parcelable {
     private String location;
     private String acqMethod;
     private String provenance;
-    private String accNum;
+    private String accNum; //later change to int
     private String notes;
-    private String image; //this is a url
+    private String image; //this is a uri
+    private boolean isLiked = false;
+    private int likeCount = 0;
 
     public Artifact(){
     }
 
+    //!!note for the time being, im just making lotNum into a String,as then I can use .getkey() to generate a string; will check if it must be a number with the TA later
     public Artifact(String lotNum, String name, String description, String category, String material, String period, String culturalOrigin, String dimensions, String conditionReport, String location, String acqMethod, String provenance, String accNum, String notes, String image) {
         this.lotNum = lotNum;
         this.name = name;
@@ -201,5 +204,26 @@ public class Artifact implements Parcelable {
         parcel.writeString(notes);
         parcel.writeString(image);
 
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public void toggleLike() {
+        isLiked = !isLiked;
+        likeCount += isLiked ? 1 : -1;
     }
 }
