@@ -23,13 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-    private TextView tvArtifactCount;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
-        tvArtifactCount = view.findViewById(R.id.tvArtifactCount); //To find Textview
-        loadArtifactCount();
 
         Button buttonRecyclerView = view.findViewById(R.id.buttonRecyclerView);
         Button buttonScroller = view.findViewById(R.id.buttonScroller);
@@ -97,19 +95,6 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
-    }
-    private void loadArtifactCount() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("artifacts");
-
-        ref.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DataSnapshot data = task.getResult();
-                long count = data.getChildrenCount();
-                tvArtifactCount.setText("Total Artifacts:" + count);
-            } else {
-                tvArtifactCount.setText("Total Artifacts: error");
-            }
-        });
     }
 
     // Swaps displayed fragment
