@@ -196,6 +196,7 @@ public class RecyclerViewFragment extends Fragment {
         String query =
                 searchText.trim().toLowerCase(Locale.ROOT);
 
+        artifactList.clear();
         filteredArtifacts.clear();
 
         for (int i = 0; i < allArtifacts.size(); i++) {
@@ -204,10 +205,12 @@ public class RecyclerViewFragment extends Fragment {
 
             boolean categoryMatch = false;
             if (selectedCategory.equals("All")) {
+                artifactList.add(artifact);
                 categoryMatch = true;
             } else {
                 String artifactCategory = artifact.getCategory();
                 if (artifactCategory != null && artifactCategory.equals(selectedCategory)) {
+                    artifactList.add(artifact);
                     categoryMatch = true;
                 }
             }
