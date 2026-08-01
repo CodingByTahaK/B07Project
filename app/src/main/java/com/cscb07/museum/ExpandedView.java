@@ -4,10 +4,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.DatabaseError;
+
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class ExpandedView extends AppCompatActivity {
 
@@ -16,6 +31,18 @@ public class ExpandedView extends AppCompatActivity {
     ImageView imagePic;
 
     Artifact selectedArtifact;
+
+    RecyclerView recyclerComments;
+    EditText editTextComment;
+    Button buttonAddComment;
+
+    ArrayList<Comment> commentList;
+    CommentAdapter commentAdapter;
+
+    DatabaseReference commentsRef;
+    FirebaseAuth auth;
+    String artifactID;
+    
 
     @Override
     protected void onCreate(Bundle expandedInstance){
@@ -44,6 +71,51 @@ public class ExpandedView extends AppCompatActivity {
         textNotes = findViewById(R.id.textViewNotes);
 
         imagePic = findViewById(R.id.imageViewPic);
+
+        recyclerComments = findViewById(R.id.recyclerComments);
+        editTextComment = findViewById(R.id.editTextComment);
+        buttonAddComment = findViewById(R.id.buttonAddComment);
+        commentList = new ArrayList<>();
+        commentAdapter = new CommentAdapter(commentList);
+        recyclerComments.setLayoutManager(new LinearLayoutManager(this));
+        recyclerComments.setAdapter(commentAdapter);
+        auth = FirebaseAuth.getInstance();
+        artifactID = getIntent().getStringExtra("artifactID");
+        commentsRef = FirebaseDatabase.getInstance()
+            .getReference("artifacts")
+            .child(artifactID)
+            .child("comments");
+        loadComments();
+
+        buttonAddComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String text = editTextComment.getText().toString();
+                FirebaseUser user = auth.getCurrentUser();
+                if (user != null && !text.isEmpty()) {
+                    DatabaseReference userRef = FirebaseDatabase.getInstance()
+                        .getReference("users")
+                        .child(user.getUid());
+                    userRef.child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            String username = snapshot.getValue(String.class);
+                            String commentID = commentsRef.push().getKey();
+
+                            Comment comment = new Comment(commentID, user.getUid(), username, text);
+                            commentsRef.child(commentID).setValue(comment);
+                            editTextComment.setText("");
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                        }
+                    });
+                }
+            }
+        });
+    
 
         selectedArtifact = new Artifact();
         //Issue with this line, keep getting null object
@@ -100,5 +172,26 @@ public class ExpandedView extends AppCompatActivity {
 
 
 
+    }
+
+
+    private void loadComments() {
+        commentsRef.addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot){
+                commentList.clear();
+                for (DataSnapshot commentSnapshot : snapshot.getChildren()){
+                    Comment comment = commentSnapshot.getValue(Comment.class);
+                    if (comment != null) {
+                        commentList.add(comment);
+                    }
+                }
+                commentAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error){
+            }
+        });
     }
 }

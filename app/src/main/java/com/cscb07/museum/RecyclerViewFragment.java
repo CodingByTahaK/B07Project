@@ -41,10 +41,11 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
     private ArtifactAdapter artifactAdapter;
     private List<Artifact> artifactList;
     private List<Artifact> allArtifacts;
+    private List<String> artifactIDs;
+    private List<String> allArtifactIDs;
     private EditText searchEditText;
     private FirebaseDatabase db;
     private DatabaseReference artifactsRef;
-
 
     @Nullable
     @Override
@@ -87,6 +88,8 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
 
         artifactList = new ArrayList<>();
         allArtifacts = new ArrayList<>();
+        artifactIDs = new ArrayList<>();
+        allArtifactIDs = new ArrayList<>();
 
         artifactAdapter = new ArtifactAdapter(artifactList, getContext(), this, this);
         recyclerView.setAdapter(artifactAdapter);
@@ -136,6 +139,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
                     @NonNull DataSnapshot dataSnapshot) {
 
                 allArtifacts.clear();
+                allArtifactIDs.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
@@ -144,6 +148,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
 
                     if (artifact != null) {
                         allArtifacts.add(artifact);
+                        allArtifactIDs.add(snapshot.getKey());
                     }
                 }
 
@@ -166,6 +171,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
                 searchText.trim().toLowerCase(Locale.ROOT);
 
         artifactList.clear();
+        artifactIDs.clear();
 
         for (int i = 0; i < allArtifacts.size(); i++) {
 
@@ -173,8 +179,10 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
 
             if (query.isEmpty()) {
                 artifactList.add(artifact);
+                artifactIDs.add(allArtifactIDs.get(i));
             } else if (artifactMatchesSearch(artifact, query)) {
                 artifactList.add(artifact);
+                artifactIDs.add(allArtifactIDs.get(i));
             }
         }
 
@@ -233,6 +241,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         Intent send = new Intent(getContext(), ExpandedView.class);
         Log.d("here's inside of send: ", artifactList.get(position).getName());
         send.putExtra("selected_artifact", artifactList.get(position));
+        send.putExtra("artifactID", artifactIDs.get(position));
         startActivity(send);
     }
 
