@@ -203,27 +203,31 @@ public class RecyclerViewFragment extends Fragment {
 
             Artifact artifact = allArtifacts.get(i);
 
-            boolean categoryMatch = false;
-            if (selectedCategory.equals("All")) {
-                artifactList.add(artifact);
-                categoryMatch = true;
-            } else {
-                String artifactCategory = artifact.getCategory();
-                if (artifactCategory != null && artifactCategory.equals(selectedCategory)) {
+            if (query.isEmpty()) {
+                boolean categoryMatch = false;
+                if (selectedCategory.equals("All")) {
                     artifactList.add(artifact);
                     categoryMatch = true;
+                } else {
+                    String artifactCategory = artifact.getCategory();
+                    if (artifactCategory != null && artifactCategory.equals(selectedCategory)) {
+                        artifactList.add(artifact);
+                        categoryMatch = true;
+                    }
                 }
-            }
 
-            boolean searchMatch = false;
-            if (query.isEmpty()) {
-                searchMatch = true;
-            } else if (artifactMatchesSearch(artifact, query)) {
-                searchMatch = true;
-            }
+                boolean searchMatch = false;
+                if (query.isEmpty()) {
+                    artifactList.add(artifact);
+                    searchMatch = true;
+                } else if (artifactMatchesSearch(artifact, query)) {
+                    artifactList.add(artifact);
+                    searchMatch = true;
+                }
 
-            if (categoryMatch && searchMatch) {
-                filteredArtifacts.add(artifact);
+                if (categoryMatch && searchMatch) {
+                    filteredArtifacts.add(artifact);
+                }
             }
         }
 
