@@ -76,16 +76,46 @@ public class ExpandedView extends AppCompatActivity {
         editTextComment = findViewById(R.id.editTextComment);
         buttonAddComment = findViewById(R.id.buttonAddComment);
         commentList = new ArrayList<>();
-        commentAdapter = new CommentAdapter(commentList);
-        recyclerComments.setLayoutManager(new LinearLayoutManager(this));
-        recyclerComments.setAdapter(commentAdapter);
+
         auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
         artifactID = getIntent().getStringExtra("artifactID");
+
+        if (artifactID == null) {
+            Log.e("ExpandedView", "artfiactID is null");
+            return;
+        }
+
         commentsRef = FirebaseDatabase.getInstance()
             .getReference("artifacts")
             .child(artifactID)
             .child("comments");
-        loadComments();
+
+        if (user != null) {
+            DatabaseReference userRef = FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(user.getUid());
+            userRef.child("userType").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    String userType = snapshot.getValue(String.class);
+
+                    if (userType != null && userType.equals("admin")) {
+                        commentAdapter = new CommentAdapter(commentList, true, artifactID);
+                    } else {
+                        commentAdapter = new CommentAdapter(commentList, false, artifactID);
+                    }
+                    recyclerComments.setLayoutManager(new LinearLayoutManager(ExpandedView.this));
+                    recyclerComments.setAdapter(commentAdapter);
+                    loadComments();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                }
+            });
+        }
+
 
         buttonAddComment.setOnClickListener(new View.OnClickListener() {
             @Override
