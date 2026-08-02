@@ -136,7 +136,7 @@ public class RecyclerViewFragment extends Fragment {
 
     private void fetchArtifactsFromDatabase() {
 
-        artifactsRef.addValueEventListener(new ValueEventListener() {
+        artifactsRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(
@@ -145,10 +145,7 @@ public class RecyclerViewFragment extends Fragment {
                 allArtifacts.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                    Artifact artifact =
-                            snapshot.getValue(Artifact.class);
-
+                    Artifact artifact = snapshot.getValue(Artifact.class);
                     if (artifact != null) {
                         allArtifacts.add(artifact);
                     }
