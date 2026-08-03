@@ -28,7 +28,7 @@ public class ManageItemsFragment extends Fragment {
             }
         });
 
-        buttonDeleteItem.setOnClickListener(v -> loadFragment(new DeleteItemFragment()));
+        buttonDeleteItem.setOnClickListener(v -> loadFragment(new Delete_fragment()));
 
         buttonEdit.setOnClickListener(v -> loadFragment(new EditArtifact()));
 
