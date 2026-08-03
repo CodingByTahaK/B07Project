@@ -8,12 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.UnknownNullability;
 
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ArtifactViewHolder> {
     private List<Artifact> artifactList;
     private LikeClick likeClickListener;
+    private static final long CLICK_THRESHOLD = 500; // ms
+
     public interface LikeClick {
         void onLikeClick(Artifact artifact, int position);
     }
@@ -43,29 +46,45 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         holder.textViewMaterial.setText(artifact.getMaterial());
         holder.textViewPeriod.setText(artifact.getPeriod());
 
+        // Listen for when the isLiked status is loaded from Firebase
+        artifact.setOnStatusLoadedListener(() -> {
+            // Verify holder is still bound to this artifact
+            if (holder.getAdapterPosition() != RecyclerView.NO_POSITION && 
+                artifactList.get(holder.getAdapterPosition()) == artifact) {
+                updateLikeUI(holder, artifact);
+            }
+        });
+
+        updateLikeUI(holder, artifact);
+
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                boolean newLikeState = !artifact.isLiked();
-                artifact.setLiked(newLikeState);
-
-                int newCount;
-                if (newLikeState) {
-                    newCount = artifact.getLikeCount() + 1;
-                } else {
-                    newCount = artifact.getLikeCount() - 1;
+                // avoid being clicked to frequently
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - holder.lastClickTime < CLICK_THRESHOLD) {
+                    return;
                 }
-                artifact.setLikeCount(newCount);
-                likebutton(holder, artifact);
-                if (likeClickListener != null) {
-                    likeClickListener.onLikeClick(artifact, position);
-                }
+                holder.lastClickTime = currentTime;
+                artifact.toggleLike(
+                    errorMessage -> {
+                        Toast.makeText(v.getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        updateLikeUI(holder, artifact); // Revert UI
+                    },
+                    () -> {
+                        if (likeClickListener != null) {
+                            likeClickListener.onLikeClick(artifact, holder.getAdapterPosition());
+                        }
+                    }
+                );
+                // Update UI instantly
+                updateLikeUI(holder, artifact);
             }
         });
     }
-    private void likebutton(ArtifactViewHolder holder, @UnknownNullability Artifact item) {
-        if (item.isLiked()) {
+
+    private void updateLikeUI(ArtifactViewHolder holder, @UnknownNullability Artifact item) {
+        if (item.getIsLiked()) {
             holder.btnLike.setImageResource(R.drawable.ic_heart_filled);
         } else {
             holder.btnLike.setImageResource(R.drawable.ic_heart_outline);
@@ -82,6 +101,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         TextView textViewName, textViewDescription, textViewCategory, textViewMaterial, textViewPeriod;
         ImageButton btnLike;
         TextView tvLikeCount;
+        long lastClickTime = 0;
 
         public ArtifactViewHolder(@NonNull View artifactView) {
             super(artifactView);

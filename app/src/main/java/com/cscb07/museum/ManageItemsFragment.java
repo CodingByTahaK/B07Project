@@ -19,6 +19,7 @@ public class ManageItemsFragment extends Fragment {
         Button buttonAddItem = view.findViewById(R.id.buttonAddItem);
         Button buttonDeleteItem = view.findViewById(R.id.buttonDeleteItem);
         Button buttonBack = view.findViewById(R.id.buttonBack);
+        Button buttonEdit = view.findViewById(R.id.EditButton);
 
         buttonAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,6 +29,8 @@ public class ManageItemsFragment extends Fragment {
         });
 
         buttonDeleteItem.setOnClickListener(v -> loadFragment(new DeleteItemFragment()));
+
+        buttonEdit.setOnClickListener(v -> loadFragment(new EditArtifact()));
 
         buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
