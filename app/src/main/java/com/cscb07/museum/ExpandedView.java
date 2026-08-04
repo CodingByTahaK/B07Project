@@ -1,3 +1,15 @@
+/**
+ * File: ExpandedView.java
+ *
+ * Version History:
+ * v1.0: Initial implementation
+ * v1.1: Added comment functionality
+ * v1.2: Removed unnecessary code + increased readability
+ *
+ * Date: Aug 03, 2026
+ *
+ */
+
 package com.cscb07.museum;
 
 import android.os.Bundle;
@@ -7,11 +19,9 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,42 +29,44 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DatabaseError;
-
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
+
+/**
+ * Description: This is the Expanded View that displays all information about a user's selected
+ * artifact from ReyclerViewFragment
+ * @version 1.2 03 Aug 2026
+ */
 public class ExpandedView extends AppCompatActivity {
 
     TextView textName, textLotNum, textDescription, textCategory, textMaterial, textPeriod, textCulturalOrigin, textDimensions, textConditionReport, textLocation, textAcqMethod, textProvenance, textAccNum, textNotes;
     TextView textLotNumLabel, textDescriptionLabel, textCategoryLabel, textMaterialLabel, textPeriodLabel, textCulturalOriginLabel, textDimensionsLabel, textConditionReportLabel, textLocationLabel, textAcqMethodLabel, textProvenanceLabel, textAccNumLabel, textNotesLabel;
     ImageView imagePic;
-
     Artifact selectedArtifact;
-
     RecyclerView recyclerComments;
     EditText editTextComment;
     Button buttonAddComment;
-
     ArrayList<Comment> commentList;
     CommentAdapter commentAdapter;
-
     DatabaseReference commentsRef;
     FirebaseAuth auth;
     String artifactID;
-    
 
+
+    /**
+     * Creates the expanded view activity
+     * @param expandedInstance stores all the artifact information that the user selected
+     */
     @Override
     protected void onCreate(Bundle expandedInstance){
         super.onCreate(expandedInstance);
         setContentView(R.layout.expanded_view_activity_item_adapter);
 
         if (getIntent().hasExtra("selected_artifact")){
-            Log.d("passed if", "onCreate: got here");
             selectedArtifact = getIntent().getParcelableExtra("selected_artifact");
         }
 
-        Log.d("passed the if", "onCreate: got here");
         textName = findViewById(R.id.textViewName);
         textLotNum = findViewById(R.id.textViewLotNum);
         textDescription = findViewById(R.id.textViewDescription);
@@ -145,13 +157,8 @@ public class ExpandedView extends AppCompatActivity {
                 }
             }
         });
-    
 
-        selectedArtifact = new Artifact();
-        //Issue with this line, keep getting null object
-        selectedArtifact = getIntent().getParcelableExtra("selected_artifact");
-
-        //going to have to handle what happens if a field is null, or else app crashes, prob checking + default values
+        //getting each field's value from the artifact
         textName.setText(selectedArtifact.getName());
         textLotNum.setText(selectedArtifact.getLotNum());
         textDescription.setText(selectedArtifact.getDescription());
@@ -183,28 +190,12 @@ public class ExpandedView extends AppCompatActivity {
         textAccNumLabel = findViewById(R.id.textViewAccNumLabel);
         textNotesLabel = findViewById(R.id.textViewNotesLabel);
 
-
-        //Add Labels' text
-        textLotNumLabel.setText("Lot Number");
-        textDescriptionLabel.setText("Description");
-        textCategoryLabel.setText("Category");
-        textMaterialLabel.setText("Material");
-        textPeriodLabel.setText("Period");
-        textCulturalOriginLabel.setText("Cultural Origin");
-        textDimensionsLabel.setText("Dimensions");
-        textConditionReportLabel.setText("Condition Report");
-        textLocationLabel.setText("Location");
-        textAcqMethodLabel.setText("Acquisition Method");
-        textProvenanceLabel.setText("Provenance");
-        textAccNumLabel.setText("Accession Number");
-        textNotesLabel.setText("Notes");
-
-
-
-
     }
 
 
+    /**
+     * Loads all comments of selected artifact
+     */
     private void loadComments() {
         commentsRef.addValueEventListener( new ValueEventListener() {
             @Override

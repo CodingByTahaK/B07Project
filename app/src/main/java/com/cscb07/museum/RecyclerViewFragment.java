@@ -1,7 +1,13 @@
-/*
- * RecyclerViewFragment
- * Version 1.0
- * July 23, 2026
+/**
+ * File: RecyclerViewFragment.java
+ *
+ * Version History:
+ * v1.0: Initial implementation
+ * v1.1: Added search artifacts functionality
+ * v1.2: Added expanded view of a single artifact functionality
+ *
+ * Date: July 23, 2026
+ *
  */
 
 package com.cscb07.museum;
@@ -17,25 +23,26 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Description: This is the recycler view that displays all the artifacts in the database
+ * also allowing for searching artifacts and viewing their expanded info
+ * @version 1.2 03 Aug 2026
+ */
 public class RecyclerViewFragment extends Fragment implements RecyclerExpandedViewInterface, LikeClick{
-
 
     private RecyclerView recyclerView;
     private ArtifactAdapter artifactAdapter;
@@ -47,6 +54,19 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
     private FirebaseDatabase db;
     private DatabaseReference artifactsRef;
 
+
+    /**
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return a View
+     */
     @Nullable
     @Override
     public View onCreateView(
@@ -54,6 +74,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
+        //inflate with recycler layout XML
         View view = inflater.inflate(
                 R.layout.fragment_recycler_view,
                 container,
@@ -65,6 +86,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
                 new LinearLayoutManager(getContext())
         );
 
+        //will check later if this needs to be deleted
         ArrayAdapter<CharSequence> adapter =
                 ArrayAdapter.createFromResource(
                         getContext(),
@@ -72,6 +94,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
                         android.R.layout.simple_spinner_item
                 );
 
+        //as well as this
         adapter.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item
         );
@@ -130,6 +153,9 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         return view;
     }
 
+    /**
+     * Fetches all the artifacts from the database to display in a recycler view
+     */
     private void fetchArtifactsFromDatabase() {
 
         artifactsRef.addValueEventListener(new ValueEventListener() {
@@ -235,11 +261,13 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
 
     }
 
-    //on clicking an artifact, a new screen is opened sent via intents, sending artifact's info with bundle
+    /**
+     * On clicking an artifact, a new screen is opened sent via intents, sending artifact's info
+     * @param position of the artifact in the artifactList
+     */
     @Override
     public void onArtifactClick(int position) {
         Intent send = new Intent(getContext(), ExpandedView.class);
-        Log.d("here's inside of send: ", artifactList.get(position).getName());
         send.putExtra("selected_artifact", artifactList.get(position));
         send.putExtra("artifactID", artifactIDs.get(position));
         startActivity(send);

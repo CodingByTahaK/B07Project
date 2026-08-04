@@ -103,4 +103,20 @@
     <string name="supabase_url">https://slamakuftowwgtwglyon.supabase.co</string>
     <string name="supabase_anon_key">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsYW1ha3VmdG93d2d0d2dseW9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMDUwMDEsImV4cCI6MjA5OTY4MTAwMX0.QfM1VFoIeVkf1Fhx8IluskDxbUj97PcZO7170-jeLuI</string>
     <string name="supabase_image_bucket">artifacts</string>
+
+    <!-- Expanded View Labels -->
+    <string name="lot_num_label">Lot Number</string>
+    <string name="description_label">Description</string>
+    <string name="category_label">Category</string>
+    <string name="material_label">Material</string>
+    <string name="period_label">Period</string>
+    <string name="cultural_origin_label">Cultural Origin</string>
+    <string name="dimensions_label">Dimensions</string>
+    <string name="condition_report_label">Condition Report</string>
+    <string name="location_label">Location</string>
+    <string name="acq_method_label">Acquisition Method</string>
+    <string name="provenance_label">Provenance</string>
+    <string name="accession_num_label">Accession Number</string>
+    <string name="notes_label">Notes</string>
+
 </resources>
