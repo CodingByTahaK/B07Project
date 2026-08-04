@@ -54,26 +54,41 @@
         app:layout_constraintTop_toBottomOf="@id/textViewMaterial" />
 
     <ImageButton
+        android:id="@+id/btnSave"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="2dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Save artifact"
+        android:src="@drawable/ic_bookmark_outline"
+        app:layout_constraintEnd_toStartOf="@id/btnLike"
+        app:layout_constraintTop_toBottomOf="@id/textViewPeriod"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tint="@android:color/white" />
+
+    <ImageButton
         android:id="@+id/btnLike"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginStart="340dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
         android:background="@android:color/transparent"
+        android:contentDescription="Like artifact"
         android:src="@drawable/ic_heart_outline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPeriod" />
+        app:layout_constraintEnd_toStartOf="@id/tvLikeCount"
+        app:layout_constraintTop_toTopOf="@id/btnSave"
+        app:layout_constraintBottom_toBottomOf="@id/btnSave" />
 
     <TextView
         android:id="@+id/tvLikeCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
         android:text="0"
         android:textSize="14sp"
-        android:layout_marginStart="4dp"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="@+id/btnLike"
-        app:layout_constraintBottom_toBottomOf="@+id/btnLike"
-        app:layout_constraintStart_toEndOf="@+id/btnLike" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnLike"
+        app:layout_constraintBottom_toBottomOf="@id/btnLike" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

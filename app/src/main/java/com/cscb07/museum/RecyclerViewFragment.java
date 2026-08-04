@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,11 +44,16 @@ public class RecyclerViewFragment extends Fragment {
     private List<Artifact> artifactList;
     private List<Artifact> allArtifacts;
 
+    private ArrayList<String> savedArtifactIDs;
+
     private Spinner spinnerCategory;
     private EditText searchEditText;
 
     private FirebaseDatabase db;
+    private FirebaseAuth auth;
+
     private DatabaseReference artifactsRef;
+    private DatabaseReference savedArtifactsRef;
 
     @Nullable
     @Override
@@ -61,11 +69,13 @@ public class RecyclerViewFragment extends Fragment {
         );
 
         recyclerView = view.findViewById(R.id.recyclerView);
+
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext())
         );
 
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
+        searchEditText = view.findViewById(R.id.searchEditText);
 
         ArrayAdapter<CharSequence> adapter =
                 ArrayAdapter.createFromResource(
@@ -80,27 +90,51 @@ public class RecyclerViewFragment extends Fragment {
 
         spinnerCategory.setAdapter(adapter);
 
-        searchEditText = view.findViewById(R.id.searchEditText);
-
         Button savedArtifactsButton =
                 view.findViewById(R.id.savedArtifactsButton);
 
         savedArtifactsButton.setOnClickListener(clickedView -> {
-            MainActivity mainActivity = (MainActivity) requireActivity();
+            MainActivity mainActivity =
+                    (MainActivity) requireActivity();
+
             mainActivity.openSavedArtifacts();
         });
 
         artifactList = new ArrayList<>();
         allArtifacts = new ArrayList<>();
+        savedArtifactIDs = new ArrayList<>();
 
         artifactAdapter = new ArtifactAdapter(artifactList);
         recyclerView.setAdapter(artifactAdapter);
+
+        artifactAdapter.setSaveClickListener(
+                new ArtifactAdapter.SaveClick() {
+
+                    @Override
+                    public void onSaveClick(Artifact artifact) {
+                        toggleSavedArtifact(artifact);
+                    }
+                }
+        );
 
         db = FirebaseDatabase.getInstance(
                 "https://b07-project-66023-default-rtdb.firebaseio.com/"
         );
 
+        auth = FirebaseAuth.getInstance();
+
         artifactsRef = db.getReference("artifacts");
+
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user != null) {
+            savedArtifactsRef = db
+                    .getReference("users")
+                    .child(user.getUid())
+                    .child("savedArtifacts");
+
+            loadSavedArtifactIDs();
+        }
 
         fetchArtifactsFromDatabase();
 
@@ -134,6 +168,76 @@ public class RecyclerViewFragment extends Fragment {
         return view;
     }
 
+    private void loadSavedArtifactIDs() {
+
+        if (savedArtifactsRef == null) {
+            return;
+        }
+
+        savedArtifactsRef.addValueEventListener(
+                new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(
+                            @NonNull DataSnapshot snapshot) {
+
+                        savedArtifactIDs.clear();
+
+                        for (DataSnapshot child : snapshot.getChildren()) {
+
+                            String lotNum =
+                                    child.getValue(String.class);
+
+                            if (lotNum != null) {
+                                savedArtifactIDs.add(lotNum);
+                            }
+                        }
+
+                        artifactAdapter.setSavedArtifactIDs(
+                                new ArrayList<>(savedArtifactIDs)
+                        );
+                    }
+
+                    @Override
+                    public void onCancelled(
+                            @NonNull DatabaseError error) {
+                        // Handle possible errors
+                    }
+                }
+        );
+    }
+
+    private void toggleSavedArtifact(Artifact artifact) {
+
+        if (savedArtifactsRef == null) {
+            return;
+        }
+
+        String lotNum = artifact.getLotNum();
+
+        if (lotNum == null || lotNum.trim().isEmpty()) {
+            Toast.makeText(
+                    requireContext(),
+                    "This artifact has no lot number.",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        if (savedArtifactIDs.contains(lotNum)) {
+            savedArtifactIDs.remove(lotNum);
+        } else {
+            savedArtifactIDs.add(lotNum);
+        }
+
+        savedArtifactsRef.setValue(savedArtifactIDs);
+
+        artifactAdapter.setSavedArtifactIDs(
+                new ArrayList<>(savedArtifactIDs)
+        );
+    }
+
     private void fetchArtifactsFromDatabase() {
 
         artifactsRef.addValueEventListener(new ValueEventListener() {
@@ -144,7 +248,8 @@ public class RecyclerViewFragment extends Fragment {
 
                 allArtifacts.clear();
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot snapshot :
+                        dataSnapshot.getChildren()) {
 
                     Artifact artifact =
                             snapshot.getValue(Artifact.class);
