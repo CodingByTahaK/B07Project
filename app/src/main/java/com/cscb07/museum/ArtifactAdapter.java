@@ -89,14 +89,18 @@ public class ArtifactAdapter
                 if (newLikeState) {
                     newCount = artifact.getLikeCount() + 1;
                 } else {
-                    newCount = artifact.getLikeCount() - 1;
+                    newCount = Math.max(0, artifact.getLikeCount() - 1);
                 }
 
                 artifact.setLikeCount(newCount);
                 likebutton(holder, artifact);
 
                 if (likeClickListener != null) {
-                    likeClickListener.onLikeClick(artifact, position);
+                    int adapterPosition = holder.getAdapterPosition();
+
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        likeClickListener.onLikeClick(artifact, adapterPosition);
+                    }
                 }
             }
         });
