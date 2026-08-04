@@ -147,9 +147,6 @@ public class ExpandedView extends AppCompatActivity {
         });
     
 
-        selectedArtifact = new Artifact();
-        //Issue with this line, keep getting null object
-        selectedArtifact = getIntent().getParcelableExtra("selected_artifact");
 
         //going to have to handle what happens if a field is null, or else app crashes, prob checking + default values
         textName.setText(selectedArtifact.getName());
