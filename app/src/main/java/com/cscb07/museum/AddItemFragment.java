@@ -1,4 +1,16 @@
-//will delete this class in the future, as it is leftover from the starter code
+/**
+ * File: AddItemFragment.java
+ *
+ * Version History:
+ * v1.0: Initial implementation
+ * v1.1: Added image field capability
+ * v1.2: Added null checking
+ * v1.3: Refactored lot number field & readability of code
+ *
+ * Date: Aug 03, 2026
+ *
+ */
+
 package com.cscb07.museum;
 
 import android.net.Uri;
@@ -12,40 +24,54 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.net.URI;
+/**
+ * Description: This is the Artifact model containing fields for an Artifact object
+ * @version 1.3 03 Aug 2026
+ */
 
 public class AddItemFragment extends Fragment {
-    private EditText editTextName, editTextDescription, editTextCulturalOrigin, editTextDimensions, editTextConditionReport, editTextCurrentLocation, editTextAccMethod, editTextProvenance, editTextAccNum, editTextNotes;
+    private EditText editTextName, editTextLotNum, editTextDescription, editTextCulturalOrigin, editTextDimensions, editTextConditionReport, editTextCurrentLocation, editTextAccMethod, editTextProvenance, editTextAccNum, editTextNotes;
     private Spinner spinnerCategory1, spinnerMaterial, spinnerPeriod;
     private Button buttonAdd, buttonUploadImg;
-
     private FirebaseDatabase db;
-    private DatabaseReference artifactsRef;
-
+    private DatabaseReference artifactsRef, lotNumRef;
     private SupabaseImageUploader imageUploader;
     private String imgURL;
     private Uri imgURI;
-    private Artifact artifact;
-    private String lotNum;
+    private String lotNumCurrent;
 
 
+    /**
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return
+     */
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_item, container, false);
 
+        editTextLotNum = view.findViewById(R.id.editTextLotnum);
         editTextName = view.findViewById(R.id.editTextName);
         editTextDescription = view.findViewById(R.id.editTextDescription);
         spinnerCategory1 = view.findViewById(R.id.spinnerCategory1);
@@ -66,7 +92,7 @@ public class AddItemFragment extends Fragment {
 
         db = FirebaseDatabase.getInstance("https://b07-project-66023-default-rtdb.firebaseio.com/");
         artifactsRef = db.getReference("artifacts");
-        lotNum = artifactsRef.push().getKey();
+        lotNumRef = db.getReference("artifacts");
 
         // Set up the spinner with categories
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -91,8 +117,6 @@ public class AddItemFragment extends Fragment {
         spinnerPeriod.setAdapter(adapterPeriods);
 
 
-        //Code snippet from the docs was used: https://developer.android.com/training/data-storage/shared/photo-picker#java
-
         // Registers a photo picker activity launcher in single-select mode.
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia =registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
 
@@ -101,22 +125,28 @@ public class AddItemFragment extends Fragment {
                 Log.d("PhotoPicker", "Selected URI: " + uri);
                 imgURI = uri;
 
-                //upload image to supabase bucket
+                //upload image to predetermined Supabase bucket
                 imageUploader = new SupabaseImageUploader(requireContext());
-                //later try to find a way to put an acutal lotnumber, problem: i upload image before saving lotnum to database,
 
                 imageUploader.uploadImage(uri, "lotNum", new
                         SupabaseImageUploader.UploadCallback() {
                             @Override
                             public void onSuccess(String publicUrl) {
                                 imgURL = publicUrl;
-                                Log.d("Supabase", "success");
+                                Toast.makeText(
+                                        getContext(),
+                                        "Image Uploaded Successfully",
+                                        Toast.LENGTH_LONG
+                                ).show();
 
                             }
                             @Override
                             public void onError(String message) {
-                                Log.d("Supabase", "failed");
-                                Log.d("Supabase error messaage", message.codePoints() + "uri: " + uri);
+                                Toast.makeText(
+                                        getContext(),
+                                        "Error uploading image: " + message,
+                                        Toast.LENGTH_LONG
+                                ).show();
 
                             }
                         });
@@ -142,15 +172,69 @@ public class AddItemFragment extends Fragment {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItem();
+                //get plain lot number user selected to compare later
+                lotNumCurrent = editTextLotNum.getText().toString().trim();
+                existLotNum(lotNumCurrent);
             }
         });
 
         return view;
     }
 
+    /**
+     * Checks if the selected lot number exists in the database
+     * @param selectedLotNum The lot Number to check
+     */
+    public void existLotNum(String selectedLotNum) {
+
+        lotNumRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            /**
+             *
+             * @param snapshot The current data at the location
+             */
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot artifactSnapshot : snapshot.getChildren()) {
+                    Artifact artifact = artifactSnapshot.getValue(Artifact.class);
+
+                    if (artifact.getLotNum() != null) {
+
+                        //Comparing use selected lot num with database
+                        if ((artifact.getLotNum().trim()).equals(selectedLotNum)) {
+                            Toast.makeText(
+                                    getContext(),
+                                    "Lot Number already exists, choose another",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                            editTextLotNum.setText("");
+                            return;
+                        }
+                    }
+                }
+                //success, lot number does not exist
+                addItem();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(
+                        getContext(),
+                        "Error loading artifacts: " + error.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
+    }
+
+    /**
+     * Adds the Artifact with the user selected fields to the Database
+     */
+
     private void addItem() {
         String name = editTextName.getText().toString().trim();
+        String lotNum = editTextLotNum.getText().toString().trim();
         String description = editTextDescription.getText().toString().trim();
         String category1 = spinnerCategory1.getSelectedItem().toString().toLowerCase();
         String material = spinnerMaterial.getSelectedItem().toString().toLowerCase();
@@ -166,7 +250,7 @@ public class AddItemFragment extends Fragment {
         String notes = editTextNotes.getText().toString().trim();
         String image = imgURL;
 
-        if (name.isEmpty() || description.isEmpty() || category1.isEmpty() || material.isEmpty() || period.isEmpty()) {
+        if (name.isEmpty() || lotNum.isEmpty() || description.isEmpty() || category1.isEmpty() || material.isEmpty() || period.isEmpty()) {
             Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
