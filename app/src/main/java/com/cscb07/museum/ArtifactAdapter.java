@@ -5,11 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +22,8 @@ public class ArtifactAdapter
     private SaveClick saveClickListener;
 
     private List<String> savedArtifactIDs = new ArrayList<>();
+
+    private static final long CLICK_THRESHOLD = 500;
 
     public interface LikeClick {
         void onLikeClick(Artifact artifact, int position);
@@ -74,39 +75,68 @@ public class ArtifactAdapter
         holder.textViewMaterial.setText(artifact.getMaterial());
         holder.textViewPeriod.setText(artifact.getPeriod());
 
-        // Display the current like state
-        likebutton(holder, artifact);
+        // Update the like button after Firebase finishes loading.
+        artifact.setOnStatusLoadedListener(() -> {
+
+            int adapterPosition = holder.getAdapterPosition();
+
+            if (adapterPosition != RecyclerView.NO_POSITION
+                    && adapterPosition < artifactList.size()
+                    && artifactList.get(adapterPosition) == artifact) {
+
+                updateLikeUI(holder, artifact);
+            }
+        });
+
+        updateLikeUI(holder, artifact);
 
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                boolean newLikeState = !artifact.isLiked();
-                artifact.setLiked(newLikeState);
+                long currentTime = System.currentTimeMillis();
 
-                int newCount;
-
-                if (newLikeState) {
-                    newCount = artifact.getLikeCount() + 1;
-                } else {
-                    newCount = Math.max(0, artifact.getLikeCount() - 1);
+                if (currentTime - holder.lastClickTime < CLICK_THRESHOLD) {
+                    return;
                 }
 
-                artifact.setLikeCount(newCount);
-                likebutton(holder, artifact);
+                holder.lastClickTime = currentTime;
 
-                if (likeClickListener != null) {
-                    int adapterPosition = holder.getAdapterPosition();
+                artifact.toggleLike(
+                        errorMessage -> {
+                            Toast.makeText(
+                                    view.getContext(),
+                                    errorMessage,
+                                    Toast.LENGTH_SHORT
+                            ).show();
 
-                    if (adapterPosition != RecyclerView.NO_POSITION) {
-                        likeClickListener.onLikeClick(artifact, adapterPosition);
-                    }
-                }
+                            updateLikeUI(holder, artifact);
+                        },
+                        () -> {
+                            if (likeClickListener != null) {
+
+                                int adapterPosition =
+                                        holder.getAdapterPosition();
+
+                                if (adapterPosition
+                                        != RecyclerView.NO_POSITION) {
+
+                                    likeClickListener.onLikeClick(
+                                            artifact,
+                                            adapterPosition
+                                    );
+                                }
+                            }
+                        }
+                );
+
+                updateLikeUI(holder, artifact);
             }
         });
 
-        // Display the current saved state
+        // Display the correct bookmark icon.
         if (savedArtifactIDs.contains(artifact.getLotNum())) {
+
             holder.btnSave.setImageResource(
                     R.drawable.ic_bookmark_filled
             );
@@ -114,7 +144,9 @@ public class ArtifactAdapter
             holder.btnSave.setContentDescription(
                     "Unsave artifact"
             );
+
         } else {
+
             holder.btnSave.setImageResource(
                     R.drawable.ic_bookmark_outline
             );
@@ -135,11 +167,11 @@ public class ArtifactAdapter
         });
     }
 
-    private void likebutton(
+    private void updateLikeUI(
             ArtifactViewHolder holder,
-            @UnknownNullability Artifact artifact) {
+            Artifact artifact) {
 
-        if (artifact.isLiked()) {
+        if (artifact.getIsLiked()) {
             holder.btnLike.setImageResource(
                     R.drawable.ic_heart_filled
             );
@@ -184,6 +216,8 @@ public class ArtifactAdapter
 
         ImageButton btnLike;
         ImageButton btnSave;
+
+        long lastClickTime = 0;
 
         public ArtifactViewHolder(
                 @NonNull View artifactView) {
