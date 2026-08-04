@@ -29,9 +29,9 @@ public class Artifact {
     private String location;
     private String acqMethod;
     private String provenance;
-    private String accNum; //later change to int
+    private String accNum;
     private String notes;
-    private String image; //this is a uri
+    private String image;
     private int likeCount = 0;
     private boolean isLiked = false;
     private boolean isSaved = false;
@@ -45,7 +45,7 @@ public class Artifact {
         this.user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-    //!!note for the time being, im just making lotNum into a String,as then I can use .getkey() to generate a string; will check if it must be a number with the TA later
+
     public Artifact(String lotNum, String name, String description, String category, String material, String period, String culturalOrigin, String dimensions, String conditionReport, String location, String acqMethod, String provenance, String accNum, String notes, String image) {
         this();
         this.lotNum = lotNum;
