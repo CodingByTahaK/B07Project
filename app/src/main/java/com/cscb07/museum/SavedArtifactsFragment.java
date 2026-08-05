@@ -81,6 +81,8 @@ public class SavedArtifactsFragment extends Fragment implements LikeClick{
                                 artifactIDs.add(lotNum);
                             }
                         }
+                        
+                        adapter.setSavedArtifactIDs(new ArrayList<>(artifactIDs));
 
                         if (artifactIDs.isEmpty()) {
                             return;

@@ -80,6 +80,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
     private EditText searchEditText;
     private FirebaseDatabase db;
     private FirebaseAuth auth;
+    private FirebaseUser user;
 
     private DatabaseReference artifactsRef;
     private DatabaseReference savedArtifactsRef;
@@ -189,7 +190,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
 
         artifactsRef = db.getReference("artifacts");
 
-        FirebaseUser user = auth.getCurrentUser();
+        user = auth.getCurrentUser();
 
         if (user != null) {
             savedArtifactsRef = db
@@ -288,13 +289,26 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
             return;
         }
 
+        boolean saved;
+
         if (savedArtifactIDs.contains(lotNum)) {
             savedArtifactIDs.remove(lotNum);
+            saved = false;
         } else {
             savedArtifactIDs.add(lotNum);
+            saved = true;
         }
 
         savedArtifactsRef.setValue(savedArtifactIDs);
+
+        if (user != null) {
+            DatabaseReference savedStatusReference = db.getReference("users")
+                .child(user.getUid())
+                .child("likedAndSavedArtifacts")
+                .child(lotNum)
+                .child("saved");
+            savedStatusReference.setValue(saved);
+        }
 
         artifactAdapter.setSavedArtifactIDs(
                 new ArrayList<>(savedArtifactIDs)
