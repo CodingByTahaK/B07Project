@@ -207,7 +207,8 @@ public class EditArtifact extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditArtifact();
+                String enteredLotNum = EditLotnum.getText().toString().trim();
+                existLotNum(enteredLotNum);
             }
         });
 
@@ -294,6 +295,47 @@ public class EditArtifact extends Fragment {
         }
     }
 
+
+    public void existLotNum(String selectedLotNum) {
+        DatabaseReference ref = db.getReference("artifacts");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot artifactSnapshot : snapshot.getChildren()) {
+                    //here i want to skip the check against the already chosen artifacts own Lotnum
+                    if (selectedFirebaseKey != null && selectedFirebaseKey.equals(artifactSnapshot.getKey())) {
+                        continue;
+                    }
+
+                    Artifact artifact = artifactSnapshot.getValue(Artifact.class);
+
+                    if (artifact != null && artifact.getLotNum() != null) {
+                        if (artifact.getLotNum().trim().equalsIgnoreCase(selectedLotNum.trim())) {
+                            Toast.makeText(
+                                    getContext(),
+                                    "Lot Number already exists, choose another",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                            EditLotnum.setText("");
+                            return;
+                        }
+                    }
+                }
+                EditArtifact();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(
+                        getContext(),
+                        "Error loading artifacts: " + error.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
+    }
     private void EditArtifact() {
 
         if (selectedFirebaseKey == null || selectedFirebaseKey.trim().isEmpty()) {
@@ -353,7 +395,7 @@ public class EditArtifact extends Fragment {
         artifactref.child("provenance").setValue(provenanceText);
         artifactref.child("accNum").setValue(accNumText);
         artifactref.child("notes").setValue(notesText);
-        artifactref.child("lotNum").setValue(selectedFirebaseKey);
+        artifactref.child("lotNum").setValue(Lotnum);
 
         Toast.makeText(
                 getContext(),
