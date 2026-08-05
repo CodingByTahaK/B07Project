@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="117dp"
+        android:layout_height="125dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
@@ -73,73 +73,46 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/tvLikeCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="12dp"
-            android:gravity="center_vertical"
-            android:text="0"
-            android:textSize="14sp"
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Save artifact"
+            android:src="@drawable/ic_bookmark_outline"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPeriod" />
+            app:layout_constraintEnd_toStartOf="@id/btnLike"
+            app:layout_constraintTop_toBottomOf="@id/textViewPeriod"
+            app:layout_constraintVertical_bias="0.666"
+            app:tint="@android:color/white" />
 
-    <ImageButton
-        android:id="@+id/btnSave"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="2dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="Save artifact"
-        android:src="@drawable/ic_bookmark_outline"
-        app:layout_constraintEnd_toStartOf="@id/btnLike"
-        app:layout_constraintTop_toBottomOf="@id/textViewPeriod"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:tint="@android:color/white" />
-
-    <ImageButton
-        android:id="@+id/btnLike"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="4dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="Like artifact"
-        android:src="@drawable/ic_heart_outline"
-        app:layout_constraintEnd_toStartOf="@id/tvLikeCount"
-        app:layout_constraintTop_toTopOf="@id/btnSave"
-        app:layout_constraintBottom_toBottomOf="@id/btnSave" />
         <ImageButton
             android:id="@+id/btnLike"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="242dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginEnd="4dp"
             android:background="@android:color/transparent"
+            android:contentDescription="Like artifact"
             android:src="@drawable/ic_heart_outline"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvLikeCount"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPeriod" />
+            app:layout_constraintBottom_toBottomOf="@id/btnSave"
+            app:layout_constraintEnd_toStartOf="@id/tvLikeCount"
+            app:layout_constraintTop_toTopOf="@id/btnSave"
+            app:layout_constraintVertical_bias="0.125" />
 
-    <TextView
-        android:id="@+id/tvLikeCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:text="0"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btnLike"
-        app:layout_constraintBottom_toBottomOf="@id/btnLike" />
+        <TextView
+            android:id="@+id/tvLikeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/btnLike"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnLike" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

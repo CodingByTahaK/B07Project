@@ -35,9 +35,9 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
 
     private static final long CLICK_THRESHOLD = 500;
 
-    public interface LikeClick {
-        void onLikeClick(Artifact artifact, int position);
-    }
+//    public interface LikeClick {
+//        void onLikeClick(Artifact artifact, int position);
+//    }
 
     public interface SaveClick {
         void onSaveClick(Artifact artifact);

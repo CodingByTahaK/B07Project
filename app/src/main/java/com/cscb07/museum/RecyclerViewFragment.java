@@ -362,6 +362,7 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
             boolean searchMatch;
 
             if (query.isEmpty()) {
+                searchMatch = true;
                 artifactList.add(artifact);
                 artifactIDs.add(allArtifactIDs.get(i));
             } else if (artifactMatchesSearch(artifact, query)) {
@@ -434,7 +435,6 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         }
     }
 
-
     private void prevPage() {
         if (currentPage > 0) {
             currentPage--;
@@ -502,7 +502,6 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
                 }
         );
     }
-
 
     private boolean artifactMatchesSearch(
             Artifact artifact,
