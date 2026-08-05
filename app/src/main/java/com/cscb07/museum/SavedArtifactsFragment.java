@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class SavedArtifactsFragment extends Fragment {
+public class SavedArtifactsFragment extends Fragment implements LikeClick{
     private RecyclerView recView;
     private ArrayList<Artifact> savedArtifacts;
     private ArtifactAdapter adapter;
@@ -44,7 +44,7 @@ public class SavedArtifactsFragment extends Fragment {
             );
             
             savedArtifacts = new ArrayList<>();
-            //adapter = new ArtifactAdapter(savedArtifacts);
+            adapter = new ArtifactAdapter(savedArtifacts, requireContext(), null, this);
             recView.setAdapter(adapter);
 
             auth = FirebaseAuth.getInstance();
@@ -73,14 +73,20 @@ public class SavedArtifactsFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         savedArtifacts.clear();
-                        ArrayList<String> artifactIDs = (ArrayList<String>) snapshot.getValue();
+                        ArrayList<String> artifactIDs = new ArrayList<>();
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            String lotNum = child.getValue(String.class);
 
-                        if (artifactIDs == null) {
+                            if (lotNum != null) {
+                                artifactIDs.add(lotNum);
+                            }
+                        }
+
+                        if (artifactIDs.isEmpty()) {
                             return;
                         }
 
-                        for (int i = 0; i < artifactIDs.size(); i++) {
-                            String lotNum = artifactIDs.get(i);
+                        for (String lotNum : artifactIDs) {
                             getArtifact(lotNum);
                         }
                     }
@@ -110,6 +116,8 @@ public class SavedArtifactsFragment extends Fragment {
                             return;
                         }
                         if (artifact != null) {
+                            // Loads the user's like + save status in real time before displaying artifact
+                            artifact.loadUserStatus();
                             savedArtifacts.add(artifact);
                             adapter.notifyDataSetChanged();
                         }
@@ -119,5 +127,11 @@ public class SavedArtifactsFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
+    }
+
+
+    // Implements logic to like/unlike artifacts from the saved artifacts page to sync everything
+    @Override
+    public void onLikeClick(Artifact artifact, int position) {
     }
 }
