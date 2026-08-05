@@ -78,6 +78,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
                     && artifactList.get(adapterPosition) == artifact) {
 
                 updateLikeUI(holder, artifact);
+                updateSaveUI(holder, artifact);
             }
         });
 
@@ -128,7 +129,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         });
 
         // Display the correct bookmark icon.
-        if (savedArtifactIDs.contains(artifact.getLotNum())) {
+        if (artifact.getIsSaved() || savedArtifactIDs.contains(artifact.getLotNum())) {
 
             holder.btnSave.setImageResource(
                     R.drawable.ic_bookmark_filled
@@ -177,6 +178,14 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         holder.tvLikeCount.setText(
                 String.valueOf(artifact.getLikeCount())
         );
+    }
+
+    private void updateSaveUI(ArtifactViewHolder holder, Artifact artifact) {
+        if (artifact.getIsSaved()) {
+            holder.btnSave.setImageResource(R.drawable.ic_bookmark_filled);
+        } else {
+            holder.btnSave.setImageResource(R.drawable.ic_bookmark_outline);
+        }
     }
 
     @Override

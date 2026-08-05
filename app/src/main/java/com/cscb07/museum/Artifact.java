@@ -75,11 +75,15 @@ public class Artifact implements Parcelable {
         }
     }
 
+
+    // Load current user's status: liked and saved artifacts, and artifact's like count
     public void loadUserStatus() {
         if (lotNum == null) return;
         this.user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
+            // User's information regarding likes and saves
             DatabaseReference userArtifactRef = FirebaseDatabase.getInstance().getReference("/users/" + user.getUid() + "/likedAndSavedArtifacts/" + lotNum);
+            // Get whether the user has liked or saved the artfiact
             userArtifactRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,12 +97,35 @@ public class Artifact implements Parcelable {
                             isSaved = saved;
                         }
                     }
-                    isStatusLoaded = true;
-                    if (onStatusLoaded != null) {
-                        onStatusLoaded.run();
-                    }
-                }
 
+                    // Artifact's total like count
+                    DatabaseReference likeCountReference = FirebaseDatabase.getInstance()
+                        .getReference("artifacts")
+                        .child(lotNum)
+                        .child("likeCount");
+
+                    // Load the number of likes
+                    likeCountReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot countSnapshot) {
+                            Integer count = countSnapshot.getValue(Integer.class);
+                            if (count != null) {
+                                likeCount = count;
+                            }
+
+                            // Update the heart icon + count info. by notifying adapter about data loading
+                            isStatusLoaded = true;
+                            if (onStatusLoaded != null) {
+                                onStatusLoaded.run();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+                
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
