@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginEnd="176.5dp"
+            android:gravity="center"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewPic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewPic"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewLotNumLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            app:shapeAppearanceOverlay="@style/roundedCornersImageView"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textViewLotNumLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/lot_num_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewLotNum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPic" />
+
+        <TextView
+            android:id="@+id/textViewLotNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/view0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLotNumLabel" />
+
+        <View
+            android:id="@+id/view0"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewDescriptionLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLotNum" />
+
+        <TextView
+            android:id="@+id/textViewDescriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/description_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view0" />
+
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionLabel" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCategoryLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
+
+        <TextView
+            android:id="@+id/textViewCategoryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/category_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCategory"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <TextView
+            android:id="@+id/textViewCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/view2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCategoryLabel" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewMaterialLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCategory" />
+
+        <TextView
+            android:id="@+id/textViewMaterialLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/material_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewMaterial"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <TextView
+            android:id="@+id/textViewMaterial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/view3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewMaterialLabel" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewPeriodLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewMaterial" />
+
+        <TextView
+            android:id="@+id/textViewPeriodLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/period_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewPeriod"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+        <TextView
+            android:id="@+id/textViewPeriod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/view4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPeriodLabel" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCulturalOriginLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPeriod" />
+
+        <TextView
+            android:id="@+id/textViewCulturalOriginLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:gravity="center"
+            android:text="@string/cultural_origin_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCulturalOrigin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+        <TextView
+            android:id="@+id/textViewCulturalOrigin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/view9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCulturalOriginLabel" />
+
+        <View
+            android:id="@+id/view9"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewDimensionsLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCulturalOrigin" />
+
+        <TextView
+            android:id="@+id/textViewDimensionsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/dimensions_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewDimensions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view9" />
+
+        <TextView
+            android:id="@+id/textViewDimensions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/view10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDimensionsLabel" />
+
+        <View
+            android:id="@+id/view10"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewConditionReportLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDimensions" />
+
+        <TextView
+            android:id="@+id/textViewConditionReportLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/condition_report_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewConditionReport"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view10" />
+
+        <TextView
+            android:id="@+id/textViewConditionReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/view11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewConditionReportLabel" />
+
+        <View
+            android:id="@+id/view11"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewLocationLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewConditionReport" />
+
+        <TextView
+            android:id="@+id/textViewLocationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/location_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewLocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view11" />
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/view6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLocationLabel" />
+
+        <TextView
+            android:id="@+id/textViewAcqMethodLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/acq_method_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewAcqMethod"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view6" />
+
+        <TextView
+            android:id="@+id/textViewAcqMethod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/view8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAcqMethodLabel" />
+
+        <View
+            android:id="@+id/view6"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewAcqMethodLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
+
+        <View
+            android:id="@+id/view8"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewProvenanceLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAcqMethod" />
+
+        <View
+            android:id="@+id/view12"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewAccNumLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewProvenance" />
+
+        <View
+            android:id="@+id/view13"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/textViewNotesLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAccNum" />
+
+        <TextView
+            android:id="@+id/textViewProvenanceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/provenance_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewProvenance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view8" />
+
+        <TextView
+            android:id="@+id/textViewProvenance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/view12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewProvenanceLabel" />
+
+        <TextView
+            android:id="@+id/textViewAccNumLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/accession_num_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewAccNum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view12" />
+
+        <TextView
+            android:id="@+id/textViewAccNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="8dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/view13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAccNumLabel" />
+
+        <TextView
+            android:id="@+id/textViewNotesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/notes_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewNotes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view13" />
+
+        <TextView
+            android:id="@+id/textViewNotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176.5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="176.5dp"
+            android:layout_marginBottom="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@id/textViewCommentsLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNotesLabel" />
+			
+		<TextView
+			android:id="@+id/textViewCommentsLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:text="Comments"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			app:layout_constraintTop_toBottomOf="@id/textViewNotes"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recyclerComments"
+			android:layout_width="0dp"
+			android:layout_height="200dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginEnd="16dp"
+			app:layout_constraintTop_toBottomOf="@id/textViewCommentsLabel"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent" />
+
+		<EditText
+			android:id="@+id/editTextComment"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginEnd="16dp"
+			android:hint="Write a comment..."
+			app:layout_constraintTop_toBottomOf="@id/recyclerComments"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent" />
+
+		<Button
+			android:id="@+id/buttonAddComment"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:layout_marginBottom="72dp"
+			android:text="Add Comment"
+			app:layout_constraintTop_toBottomOf="@id/editTextComment"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>

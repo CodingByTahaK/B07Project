@@ -1,15 +1,23 @@
-/*
- * RecyclerViewFragment
- * Version 1.0
- * July 23, 2026
+/**
+ * File: RecyclerViewFragment.java
+ *
+ * Version History:
+ * v1.0: Initial implementation
+ * v1.1: Added search artifacts functionality
+ * v1.2: Added expanded view of a single artifact functionality
+ *
+ * Date: July 23, 2026
+ *
  */
 
 package com.cscb07.museum;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +41,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class RecyclerViewFragment extends Fragment {
+/**
+ * Description: This is the recycler view that displays all the artifacts in the database
+ * also allowing for searching artifacts and viewing their expanded info
+ * @version 1.2 03 Aug 2026
+ */
+public class RecyclerViewFragment extends Fragment implements RecyclerExpandedViewInterface, LikeClick{
 
     private static final String PREF_NAME = "ArtifactPrefs";
     private static final String KEY_PAGE_SIZE = "page_size";
@@ -56,16 +68,16 @@ public class RecyclerViewFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ArtifactAdapter artifactAdapter;
-
     private List<Artifact> artifactList;
     private List<Artifact> allArtifacts;
+    private List<String> artifactIDs;
+    private List<String> allArtifactIDs;
     private List<Artifact> filteredArtifacts;
 
     private ArrayList<String> savedArtifactIDs;
 
     private Spinner spinnerCategory;
     private EditText searchEditText;
-
     private FirebaseDatabase db;
     private FirebaseAuth auth;
 
@@ -75,6 +87,19 @@ public class RecyclerViewFragment extends Fragment {
 
 
 
+
+    /**
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return a View
+     */
     @Nullable
     @Override
     public View onCreateView(
@@ -82,6 +107,7 @@ public class RecyclerViewFragment extends Fragment {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
+        //inflate with recycler layout XML
         View view = inflater.inflate(
                 R.layout.fragment_recycler_view,
                 container,
@@ -94,6 +120,7 @@ public class RecyclerViewFragment extends Fragment {
                 new LinearLayoutManager(getContext())
         );
 
+        //will check later if this needs to be deleted
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
         searchEditText = view.findViewById(R.id.searchEditText);
 
@@ -104,10 +131,12 @@ public class RecyclerViewFragment extends Fragment {
                         android.R.layout.simple_spinner_item
                 );
 
+        //as well as this
         adapter.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item
         );
 
+        searchEditText = view.findViewById(R.id.searchEditText);
         spinnerCategory.setAdapter(adapter);
 
         spinnerPagination = view.findViewById(R.id.spinnerPagination);
@@ -129,6 +158,8 @@ public class RecyclerViewFragment extends Fragment {
 
         artifactList = new ArrayList<>();
         allArtifacts = new ArrayList<>();
+        artifactIDs = new ArrayList<>();
+        allArtifactIDs = new ArrayList<>();
         filteredArtifacts = new ArrayList<>();
         savedArtifactIDs = new ArrayList<>();
 
@@ -137,7 +168,7 @@ public class RecyclerViewFragment extends Fragment {
         btnPrevPage.setOnClickListener(v -> prevPage());
         btnNextPage.setOnClickListener(v -> nextPage());
 
-        artifactAdapter = new ArtifactAdapter(artifactList);
+        artifactAdapter = new ArtifactAdapter(artifactList, getContext(), this, this);
         recyclerView.setAdapter(artifactAdapter);
 
         artifactAdapter.setSaveClickListener(
@@ -170,7 +201,6 @@ public class RecyclerViewFragment extends Fragment {
         }
 
         fetchArtifactsFromDatabase();
-
         searchEditText.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -280,12 +310,14 @@ public class RecyclerViewFragment extends Fragment {
                     @NonNull DataSnapshot dataSnapshot) {
 
                 allArtifacts.clear();
+                allArtifactIDs.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Artifact artifact = snapshot.getValue(Artifact.class);
 
                     if (artifact != null) {
                         allArtifacts.add(artifact);
+                        allArtifactIDs.add(snapshot.getKey());
                     }
                 }
 
@@ -307,6 +339,8 @@ public class RecyclerViewFragment extends Fragment {
         String query =
                 searchText.trim().toLowerCase(Locale.ROOT);
 
+        artifactList.clear();
+        artifactIDs.clear();
         filteredArtifacts.clear();
 
         for (int i = 0; i < allArtifacts.size(); i++) {
@@ -328,6 +362,11 @@ public class RecyclerViewFragment extends Fragment {
             boolean searchMatch;
 
             if (query.isEmpty()) {
+                artifactList.add(artifact);
+                artifactIDs.add(allArtifactIDs.get(i));
+            } else if (artifactMatchesSearch(artifact, query)) {
+                artifactList.add(artifact);
+                artifactIDs.add(allArtifactIDs.get(i));
                 searchMatch = true;
             } else {
                 searchMatch = artifactMatchesSearch(artifact, query);
@@ -503,5 +542,28 @@ public class RecyclerViewFragment extends Fragment {
         } else {
             return value;
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    /**
+     * On clicking an artifact, a new screen is opened sent via intents, sending artifact's info
+     * @param position of the artifact in the artifactList
+     */
+    @Override
+    public void onArtifactClick(int position) {
+        Intent send = new Intent(getContext(), ExpandedView.class);
+        send.putExtra("selected_artifact", artifactList.get(position));
+        send.putExtra("artifactID", artifactIDs.get(position));
+        startActivity(send);
+    }
+
+    @Override
+    public void onLikeClick(Artifact artifact, int position) {
+
     }
 }
