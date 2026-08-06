@@ -5,13 +5,16 @@
     android:id="@+id/Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F1E8"
     tools:context=".ManageItemsFragment">
 
     <Button
         android:id="@+id/buttonAddItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#FFD1DC"
         android:text="@string/add_item"
+        android:textColor="#36454F"
         app:layout_constraintBottom_toTopOf="@+id/buttonDeleteItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +24,9 @@
         android:id="@+id/buttonDeleteItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#FFD1DC"
         android:text="@string/delete_item"
+        android:textColor="#36454F"
         app:layout_constraintBottom_toTopOf="@+id/buttonBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +36,9 @@
         android:id="@+id/buttonBack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#FFD1DC"
         android:text="@string/back"
+        android:textColor="#36454F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,11 +48,13 @@
         android:id="@+id/EditButton"
         android:layout_width="407dp"
         android:layout_height="56dp"
+        android:background="#FFD1DC"
         android:text="Edit Item"
+        android:textColor="#36454F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.343" />
+        app:layout_constraintVertical_bias="0.357" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#36454F"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFD1DC"
         tools:context=".AddItemFragment">
 
         <!-- Artifact Name -->
@@ -26,6 +25,9 @@
             android:ems="10"
             android:hint="Name"
             android:inputType="text"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,6 +43,9 @@
             android:ems="10"
             android:hint="Description"
             android:inputType="textMultiLine"
+            android:backgroundTint="#36454F"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextName" />
@@ -53,6 +58,8 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
+
+            android:background="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextDescription" />
@@ -65,6 +72,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
+            android:background="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinnerPeriod" />
@@ -77,6 +85,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
+            android:background="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinnerCategory1" />
@@ -91,6 +100,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Cultural Origin"
             android:inputType="text"
+            android:backgroundTint="#36454F"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinnerMaterial" />
@@ -105,6 +117,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Dimensions"
             android:inputType="text"
+            android:backgroundTint="#36454F"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editCulturalOrigin" />
@@ -119,6 +134,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Condition Report"
             android:inputType="textMultiLine"
+            android:backgroundTint="#36454F"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editDimensions" />
@@ -133,6 +151,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Current Location"
             android:inputType="text"
+            android:backgroundTint="#36454F"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editConditionReport" />
@@ -147,6 +168,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Acquisition Method"
             android:inputType="text"
+            android:backgroundTint="#36454F"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editCurrentLocation" />
@@ -160,6 +184,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:hint="Provenance"
+            android:backgroundTint="#36454F"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -175,6 +202,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Accession Number"
             android:inputType="text"
+            android:backgroundTint="#36454F"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editProvenance" />
@@ -188,6 +218,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:hint="Notes"
+            android:backgroundTint="#36454F"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -201,7 +234,9 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
+            android:backgroundTint="#F5F1E8"
             android:text="Upload image"
+            android:textColor="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editNotes" />
@@ -214,11 +249,12 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
+            android:backgroundTint="#F5F1E8"
             android:text="Submit"
+            android:textColor="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonUploadImg" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
