@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD1DC"
+    android:background="#F5F1E8"
     tools:context=".RecyclerViewFragment">
+
 
     <EditText
         android:id="@+id/searchEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:backgroundTint="#7A3333"
         android:hint="Search artifacts"
         android:inputType="text"
         android:padding="12dp"
+        android:backgroundTint="#36454F"
+        android:textColor="#36454F"
+        android:textColorHint="#36454F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/savedArtifactsButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#FFD1DC"
         android:text="Saved Artifacts"
-        app:layout_constraintTop_toBottomOf="@id/searchEditText"
+        android:textColor="#36454F"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinnerCategory" />
+        app:layout_constraintTop_toBottomOf="@id/searchEditText" />
+
 
     <LinearLayout
         android:id="@+id/layoutPaginationControl"
@@ -41,32 +49,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Per page: "
-        android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Per page: "
+            android:backgroundTint="#36454F"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:textSize="14sp" />
+
 
         <Spinner
             android:id="@+id/spinnerPagination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#36454F"
             android:minWidth="80dp" />
+
 
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
+            android:background="#36454F"
+
+
             android:layout_weight="1" />
+
 
         <TextView
             android:id="@+id/tvPageInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1/1"
+            android:textColor="#36454F"
             android:textSize="14sp"
             android:textStyle="bold" />
 
+
     </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -76,7 +98,8 @@
         app:layout_constraintTop_toBottomOf="@id/layoutPaginationControl"
         app:layout_constraintBottom_toTopOf="@id/layoutPaginationButtons"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchEditText" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <LinearLayout
         android:id="@+id/layoutPaginationButtons"
@@ -89,23 +112,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" >
 
-    <Button
-        android:id="@+id/btnPrevPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Previous"
-        android:textSize="12sp"
-        android:layout_marginEnd="16dp" />
+
+        <Button
+            android:id="@+id/btnPrevPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="#FFD1DC"
+            android:text="Previous"
+            android:textColor="#36454F"
+            android:textSize="12sp" />
 
 
-    <Button
-        android:id="@+id/btnNextPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        android:textSize="12sp"
-        android:layout_marginEnd="16dp" />
+
+
+        <Button
+            android:id="@+id/btnNextPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="#FFD1DC"
+            android:text="Next"
+            android:textColor="#36454F"
+            android:textSize="12sp" />
     </LinearLayout>
 
 
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
