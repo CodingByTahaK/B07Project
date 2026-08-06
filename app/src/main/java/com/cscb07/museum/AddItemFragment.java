@@ -37,7 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * Description: This is the Artifact model containing fields for an Artifact object
+ * Description: This is the AddItemFragment that allows users to add new Artifact items to the realtime database
  * @version 1.3 03 Aug 2026
  */
 

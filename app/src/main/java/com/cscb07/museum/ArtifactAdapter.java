@@ -23,6 +23,10 @@ import android.widget.ImageButton;
 
 import org.jetbrains.annotations.UnknownNullability;
 
+/**
+ * Displays artifact information in a RecyclerView and manages
+ * user interactions such as liking, saving, and opening artifacts.
+ */
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ArtifactViewHolder> {
     private List<Artifact> artifactList;
     Context context;
@@ -39,11 +43,17 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
 //        void onLikeClick(Artifact artifact, int position);
 //    }
 
+    /**
+     * Callback interface used when a user clicks an artifact's
+     * Save/Unsave bookmark button.
+     */
     public interface SaveClick {
         void onSaveClick(Artifact artifact);
     }
 
-    public ArtifactAdapter(List<Artifact> artifactList, Context context, RecyclerExpandedViewInterface recyclerExpandedViewInterface, LikeClick likeClickListener) {
+    public ArtifactAdapter(List<Artifact> artifactList, Context context,
+                           RecyclerExpandedViewInterface recyclerExpandedViewInterface,
+                           LikeClick likeClickListener) {
         this.context = context;
         this.artifactList = artifactList;
         this.recyclerExpandedViewInterface = recyclerExpandedViewInterface;
@@ -58,6 +68,8 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         return new ArtifactViewHolder(view, recyclerExpandedViewInterface);
     }
 
+    // Display a filled bookmark when the artifact is saved,
+    // or an outlined bookmark when it is not saved.
     @Override
     public void onBindViewHolder(@NonNull ArtifactViewHolder holder, int position) {
         Artifact artifact = artifactList.get(position);
@@ -84,6 +96,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
 
         updateLikeUI(holder, artifact);
 
+        // Notify the fragment when the user clicks Save or Unsave.
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,12 +206,23 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         return artifactList.size();
     }
 
+    /**
+     * Sets the listener that handles Save/Unsave button clicks.
+     *
+     * @param saveClickListener the Save/Unsave click listener
+     */
     public void setSaveClickListener(
             SaveClick saveClickListener) {
 
         this.saveClickListener = saveClickListener;
     }
 
+    /**
+     * Updates the list of saved artifact lot numbers and refreshes
+     * the RecyclerView so the correct bookmark icons are displayed.
+     *
+     * @param savedArtifactIDs the lot numbers of the user's saved artifacts
+     */
     public void setSavedArtifactIDs(
             List<String> savedArtifactIDs) {
 

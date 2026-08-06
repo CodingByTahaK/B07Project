@@ -31,8 +31,6 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
 
         Button buttonRecyclerView = view.findViewById(R.id.buttonRecyclerView);
-        Button buttonScroller = view.findViewById(R.id.buttonScroller);
-        Button buttonSpinner = view.findViewById(R.id.buttonSpinner);
         Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
         Button buttonLogout = view.findViewById(R.id.buttonLogout);
 
@@ -63,20 +61,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 loadFragment(new RecyclerViewFragment());
-            }
-        });
-
-        buttonScroller.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new ScrollerFragment());
-            }
-        });
-
-        buttonSpinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new SpinnerFragment());
             }
         });
 
