@@ -8,12 +8,14 @@
     android:layout_marginLeft="7dp"
     android:layout_marginRight="7dp"
     app:contentPadding="6dp"
+
     android:padding="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"
         tools:layout_editor_absoluteX="8dp"
+        android:background="#FFD1DC"
         tools:layout_editor_absoluteY="8dp">
 
         <TextView
@@ -24,6 +26,7 @@
             android:layout_marginEnd="17dp"
             android:text="Name"
             android:textStyle="bold"
+            android:textColor="#36454F"
             app:layout_constraintBottom_toTopOf="@+id/textViewCategory"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="17dp"
             android:text="Category"
+            android:textColor="#36454F"
             app:layout_constraintBottom_toTopOf="@+id/textViewMaterial"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewName" />
@@ -45,6 +49,7 @@
             android:layout_marginEnd="17dp"
             android:layout_marginBottom="1dp"
             android:text="Period"
+            android:textColor="#36454F"
             app:layout_constraintBottom_toTopOf="@+id/btnLike"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewMaterial" />
@@ -55,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="17dp"
             android:text="Material"
+            android:textColor="#36454F"
             app:layout_constraintBottom_toTopOf="@+id/textViewPeriod"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewCategory" />
@@ -67,6 +73,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="32dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textViewName"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +93,7 @@
             app:layout_constraintEnd_toStartOf="@id/btnLike"
             app:layout_constraintTop_toBottomOf="@id/textViewPeriod"
             app:layout_constraintVertical_bias="0.666"
-            app:tint="@android:color/white" />
+            app:tint="#36454F" />
 
         <ImageButton
             android:id="@+id/btnLike"
@@ -96,6 +103,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="Like artifact"
             android:src="@drawable/ic_heart_outline"
+            android:tint="#36454F"
             app:layout_constraintBottom_toBottomOf="@id/btnSave"
             app:layout_constraintEnd_toStartOf="@id/tvLikeCount"
             app:layout_constraintTop_toTopOf="@id/btnSave"
@@ -108,6 +116,7 @@
             android:layout_marginEnd="8dp"
             android:gravity="center"
             android:text="0"
+            android:textColor="#36454F"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/btnLike"
             app:layout_constraintEnd_toEndOf="parent"
