@@ -21,6 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Displays the artifacts saved by the currently logged-in user.
+ */
 public class SavedArtifactsFragment extends Fragment implements LikeClick{
     private RecyclerView recView;
     private ArrayList<Artifact> savedArtifacts;
@@ -55,8 +58,10 @@ public class SavedArtifactsFragment extends Fragment implements LikeClick{
             return view;
     }
 
-    // Reads the list of saved artifact lot numbers if a user is logged in, else nothing to load
-    // Finds the full artifact details for each saved lot number
+    /**
+     * Loads the current user's saved artifact lot numbers from Firebase
+     * and retrieves the corresponding artifact information.
+     */
     public void loadSavedArtifacts() {
         FirebaseUser user = auth.getCurrentUser();
         
@@ -99,7 +104,12 @@ public class SavedArtifactsFragment extends Fragment implements LikeClick{
                 });
     }
 
-    // Looks up artifact by lot number and adds them to the list, then refresh Recycler View
+    /**
+     * Retrieves an artifact from Firebase using its lot number
+     * and adds it to the saved artifacts list.
+     *
+     * @param lotNum the lot number of the artifact to retrieve
+     */
     private void getArtifact(String lotNum) {
         data.child("artifacts")
                 .orderByChild("lotNum")

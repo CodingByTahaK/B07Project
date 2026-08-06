@@ -214,6 +214,10 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         return view;
     }
 
+    /**
+     * Loads the current user's saved artifact lot numbers from Firebase
+     * and updates the adapter so the correct bookmark icons are displayed.
+     */
     private void loadSavedArtifactIDs() {
 
         if (savedArtifactsRef == null) {
@@ -253,6 +257,12 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         );
     }
 
+    /**
+     * Saves an artifact if it is not currently saved, or removes it
+     * from the user's saved artifacts if it is already saved.
+     *
+     * @param artifact the artifact to save or unsave
+     */
     private void toggleSavedArtifact(Artifact artifact) {
 
         if (savedArtifactsRef == null) {
@@ -330,6 +340,12 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         });
     }
 
+    /**
+     * Filters the artifact list using the entered search text and selected
+     * category, then applies pagination to the matching results.
+     *
+     * @param searchText the text entered by the user in the search field
+     */
     private void filterArtifacts(String searchText) {
 
         String query =
@@ -499,6 +515,15 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         );
     }
 
+    /**
+     * Checks whether an artifact contains the search query in any
+     * of its searchable fields.
+     *
+     * @param artifact the artifact being searched
+     * @param query the lowercase search query
+     * @return true if the query appears in any artifact field;
+     *         false otherwise
+     */
     private boolean artifactMatchesSearch(
             Artifact artifact,
             String query) {
@@ -530,6 +555,13 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         }
     }
 
+    /**
+     * Converts a null string into an empty string to prevent
+     * null pointer errors while searching artifact fields.
+     *
+     * @param value the string being checked
+     * @return an empty string if the value is null; otherwise the value
+     */
     private String safe(String value) {
 
         if (value == null) {

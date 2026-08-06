@@ -17,6 +17,10 @@ import android.content.Intent;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Hosts the application's fragments and handles navigation
+ * between the main application screens.
+ */
 public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase db;
@@ -40,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    /**
+     * Opens the Saved Artifacts screen by replacing the current fragment
+     * with a SavedArtifactsFragment.
+     */
     public void openSavedArtifacts() {
         loadFragment(new SavedArtifactsFragment());
     }
