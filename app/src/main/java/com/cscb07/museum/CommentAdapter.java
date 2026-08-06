@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.FirebaseDatabase;
@@ -106,7 +108,31 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
                             dialog.dismiss();
                         }
                     });
-                    builder.show();
+                    AlertDialog dialog = builder.create();
+                    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialogInterface) {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                                    .setTextColor(Color.parseColor("#36454F"));
+                            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                                    .setTextColor(Color.parseColor("#36454F"));
+                            int titleId = view.getContext().getResources().getIdentifier("alertTitle", "id", "android");
+                            TextView title = dialog.findViewById(titleId);
+                            int messageId = view.getContext().getResources().getIdentifier("message", "id", "android");
+                            TextView message = dialog.findViewById(messageId);
+
+                            if (message != null) {
+                                message.setTextColor(Color.parseColor("#36454F"));
+                            }
+                            if (title != null) {
+                                title.setTextColor(Color.parseColor("#36454F"));
+                            }
+                            dialog.getWindow().setBackgroundDrawable(
+                                new ColorDrawable(Color.parseColor("#F5F1E8")));
+                        }
+                    });
+
+                    dialog.show();
                 }
             });
 
@@ -119,6 +145,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
                     
                     EditText editText = new EditText(view.getContext());
                     editText.setText(comment.getComment());
+                    editText.setTextColor(Color.parseColor("#36454F"));
+                    editText.setHintTextColor(Color.parseColor("#36454F"));
                     builder.setView(editText);
 
                     builder.setPositiveButton("Save Changes", new DialogInterface.OnClickListener() {
@@ -144,7 +172,35 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
                             dialog.dismiss();
                         }
                     });
-                    builder.show();
+                    AlertDialog dialog = builder.create();
+                    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialogInterface) {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                                    .setTextColor(Color.parseColor("#36454F"));
+                            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                                    .setTextColor(Color.parseColor("#36454F"));
+
+                            int titleId = view.getContext().getResources().getIdentifier("alertTitle", "id", "android");
+                            TextView title = dialog.findViewById(titleId);
+                            int messageId = view.getContext().getResources().getIdentifier("message", "id", "android");
+                            TextView message = dialog.findViewById(messageId);
+
+                            if (message != null) {
+                                message.setTextColor(Color.parseColor("#36454F"));
+                            }
+                            if (title != null) {
+                                title.setTextColor(Color.parseColor("#36454F"));
+                            }
+
+                            editText.setTextColor(Color.parseColor("#36454F"));
+                            editText.setHintTextColor(Color.parseColor("#36454F"));
+                            editText.getBackground().setTint(Color.parseColor("#36454F"));
+                            dialog.getWindow().setBackgroundDrawable(
+                                new ColorDrawable(Color.parseColor("#F5F1E8")));
+                        }
+                    });
+                    dialog.show();
                 }
             });
 
