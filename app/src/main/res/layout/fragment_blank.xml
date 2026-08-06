@@ -11,6 +11,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#F5F1E8"
         tools:context=".EditArtifact">
 
         <!-- Artifact Name -->
@@ -23,8 +24,11 @@
             android:layout_marginEnd="32dp"
             android:hint="Search artifact to edit"
             android:inputType="text"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -34,9 +38,12 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
+            android:backgroundTint="#36454F"
             android:ems="10"
             android:hint="Name"
             android:inputType="text"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/searchArtifactView" />
@@ -52,6 +59,9 @@
             android:ems="10"
             android:hint="Description"
             android:inputType="textMultiLine"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextArtiName" />
@@ -64,6 +74,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
+            android:background="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextArtiDesc" />
@@ -76,6 +87,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
+            android:background="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/EditPeriodspin" />
@@ -88,6 +100,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
+            android:background="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinner3" />
@@ -102,6 +115,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Cultural Origin"
             android:inputType="text"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinner4" />
@@ -116,6 +132,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Dimensions"
             android:inputType="text"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editCulturalOrigin" />
@@ -130,6 +149,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Condition Report"
             android:inputType="textMultiLine"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editDimensions" />
@@ -144,6 +166,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Current Location"
             android:inputType="text"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editConditionReport" />
@@ -158,6 +183,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Acquisition Method"
             android:inputType="text"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editCurrentLocation" />
@@ -172,6 +200,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Provenance"
             android:inputType="textMultiLine"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editAccMethod" />
@@ -186,6 +217,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Accession Number"
             android:inputType="text"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editProvenance" />
@@ -200,6 +234,9 @@
             android:layout_marginEnd="32dp"
             android:hint="Notes"
             android:inputType="textMultiLine"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editAccNum" />
@@ -215,6 +252,9 @@
             android:ems="10"
             android:hint="Lot Number"
             android:inputType="text"
+            android:textColor="#36454F"
+            android:textColorHint="#36454F"
+            android:backgroundTint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editNotes" />
@@ -227,7 +267,9 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
+            android:background="#FFD1DC"
             android:text="Upload image"
+            android:textColor="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextArtiLotnum" />
@@ -240,7 +282,9 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
+            android:background="#FFD1DC"
             android:text="Submit"
+            android:textColor="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonUploadImage" />
@@ -254,7 +298,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="24dp"
+            android:background="#FFD1DC"
             android:text="Back"
+            android:textColor="#36454F"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

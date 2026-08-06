@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F1E8"
     tools:context=".Delete_fragment">
 
     <AutoCompleteTextView
@@ -15,6 +15,9 @@
         android:layout_marginEnd="32dp"
         android:hint="Search artifact to delete"
         android:inputType="text"
+        android:textColor="#36454F"
+        android:textColorHint="#36454F"
+        android:backgroundTint="#36454F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -24,9 +27,11 @@
 
     <Button
         android:id="@+id/buttondelete"
-        android:layout_width="122dp"
-        android:layout_height="113dp"
+        android:layout_width="148dp"
+        android:layout_height="83dp"
+        android:background="#FFD1DC"
         android:text="Delete"
+        android:textColor="#36454F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +41,9 @@
         android:id="@+id/goback1"
         android:layout_width="147dp"
         android:layout_height="53dp"
+        android:background="#FFD1DC"
         android:text="Back"
+        android:textColor="#36454F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
