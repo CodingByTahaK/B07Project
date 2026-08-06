@@ -718,23 +718,26 @@
 			android:layout_marginStart="16dp"
 			android:layout_marginEnd="16dp"
 			android:hint="Write a comment..."
+            android:backgroundTint="#36454F"
             android:textColor="#36454F"
+            android:textColorHint="#36454F"
 			app:layout_constraintTop_toBottomOf="@id/recyclerComments"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent" />
 
-		<Button
-			android:id="@+id/buttonAddComment"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
-			android:layout_marginBottom="72dp"
-			android:text="Add Comment"
+        <Button
+            android:id="@+id/buttonAddComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="72dp"
+            android:background="#FFD1DC"
+            android:text="Add Comment"
             android:textColor="#36454F"
-			app:layout_constraintTop_toBottomOf="@id/editTextComment"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextComment" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

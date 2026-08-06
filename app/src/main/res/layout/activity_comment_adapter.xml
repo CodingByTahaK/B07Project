@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Username"
         android:textSize="18sp"
+        android:textColor="#36454F"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/buttonLayout"
@@ -32,6 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit"
+            android:background="#FFD1DC"
+            android:textColor="#36454F"
             android:visibility="gone"/>
 
         <Button
@@ -39,6 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete"
+            android:textColor="#36454F"
+            android:background="#FFD1DC"
             android:visibility="gone"/>
 
     </LinearLayout>
@@ -49,6 +54,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Comment"
+        android:textColor="#36454F"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewUsername"/>
