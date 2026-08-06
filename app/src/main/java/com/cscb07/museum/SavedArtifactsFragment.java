@@ -21,6 +21,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Fragment displaying the saved artfiacts of the current user
+ * Gets saved artifact IDs from the Firebase and loads the
+ * artifact information accordingly, displaying them
+ * in a RecyclerView format
+ */
 public class SavedArtifactsFragment extends Fragment implements LikeClick{
     private RecyclerView recView;
     private ArrayList<Artifact> savedArtifacts;
@@ -28,11 +34,21 @@ public class SavedArtifactsFragment extends Fragment implements LikeClick{
     private FirebaseAuth auth;
     private DatabaseReference data;
 
+    /**
+     * Creates a new SavedArtifactsFragment
+     */
     public SavedArtifactsFragment(){
     }
 
-    // Uses Recycler View, initiates the backing list and adapter for saved artifacts
-    // Finds the user's saved artifacts and adds them to the list
+    /**
+     * Creates the fragment view and sets up the RecyclerView
+     * Then initializes the artifact list and adapter, connecting
+     * it to the firebase and loading the saved artifacts
+     * @param inflater - LayoutInflater used to inflate the fragment layout
+     * @param container - the parent ViewGroup that contains the fragment
+     * @param savedInstanceState - the last saved state of the fragment if it exists
+     * @return the created fragment view
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,8 +71,11 @@ public class SavedArtifactsFragment extends Fragment implements LikeClick{
             return view;
     }
 
-    // Reads the list of saved artifact lot numbers if a user is logged in, else nothing to load
-    // Finds the full artifact details for each saved lot number
+    /**
+     * Gets the saved artifact IDs from the Firebase for the current user
+     * Loads the artifact's details and adds them to the RecyclerView
+     * Nothing is loaded if no valid user is logged in
+     */
     public void loadSavedArtifacts() {
         FirebaseUser user = auth.getCurrentUser();
         
@@ -99,7 +118,12 @@ public class SavedArtifactsFragment extends Fragment implements LikeClick{
                 });
     }
 
-    // Looks up artifact by lot number and adds them to the list, then refresh Recycler View
+    /**
+     * Gets an artifact from the Firebase based on the lot number
+     * Adds this artifact to the list of saved artifacts
+     * and then refreshes the RecyclerView
+     * @param lotNum - the lot number of the artifact
+     */
     private void getArtifact(String lotNum) {
         data.child("artifacts")
                 .orderByChild("lotNum")
@@ -132,7 +156,12 @@ public class SavedArtifactsFragment extends Fragment implements LikeClick{
     }
 
 
-    // Implements logic to like/unlike artifacts from the saved artifacts page to sync everything
+    /**
+     * Handles like / unlike actions on artifacts
+     * Maintains the synchronization with the interface of LikeClick
+     * @param artifact - the artifact that was liked or unliked
+     * @param position - the position of the artifact in the RecyclerView
+     */
     @Override
     public void onLikeClick(Artifact artifact, int position) {
     }
