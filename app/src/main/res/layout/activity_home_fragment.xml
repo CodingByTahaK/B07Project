@@ -10,52 +10,38 @@
         android:id="@+id/buttonRecyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/recyclerview"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/view_artifacts"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonManageItems"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"/>
-
-    <Button
-        android:id="@+id/buttonScroller"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/scroller"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSpinner"/>
-
-    <Button
-        android:id="@+id/buttonSpinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/spinner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonScroller" />
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <Button
         android:id="@+id/buttonManageItems"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/manage_items"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSpinner"
+        app:layout_constraintTop_toBottomOf="@id/buttonRecyclerView"
+        app:layout_constraintBottom_toTopOf="@id/buttonLogout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/buttonLogout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/logout"
-        app:layout_constraintTop_toBottomOf="@+id/buttonManageItems"
+        app:layout_constraintTop_toBottomOf="@id/buttonManageItems"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
