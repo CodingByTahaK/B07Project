@@ -13,11 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:background="#FFD1DC"
         android:text="@string/view_artifacts"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#36454F"
         app:layout_constraintBottom_toTopOf="@id/buttonManageItems"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread" />
 
     <Button
@@ -26,11 +28,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:background="#FFD1DC"
         android:text="@string/manage_items"
-        app:layout_constraintTop_toBottomOf="@id/buttonRecyclerView"
+        android:textColor="#36454F"
         app:layout_constraintBottom_toTopOf="@id/buttonLogout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/buttonRecyclerView" />
 
     <Button
         android:id="@+id/buttonLogout"
@@ -38,11 +42,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:background="#E7BFC8"
         android:text="@string/logout"
-        app:layout_constraintTop_toBottomOf="@id/buttonManageItems"
+        android:textColor="#36454F"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/buttonManageItems" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
