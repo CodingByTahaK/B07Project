@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">artifact manager</string>
+    <string name="app_name">Museum Artifact Manager</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="delete_item">Delete Item</string>
@@ -11,6 +11,7 @@
     <string name="spinner">Spinner</string>
     <string name="manage_items">Manage Items</string>
     <string name="logout">Log out</string>
+    <string name="view_artifacts">View Artifacts</string>
 
     <string name="login_title">Login</string>
     <string name="signup_title">Sign up</string>
