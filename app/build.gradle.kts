@@ -36,7 +36,12 @@ android {
 dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.activity.compose)
-    implementation(libs.appcompat)
+
+    implementation("androidx.appcompat:appcompat:1.7.1+")
+    // For loading and tinting drawables on older versions of the platform
+    implementation("androidx.appcompat:appcompat-resources:1.7.1+")
+
+    //implementation(libs.appcompat)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.material)
@@ -55,7 +60,10 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation(libs.okhttp3) //old: 4.0.0
     implementation(libs.activity.v1130) //old 1.9.0
+    implementation("com.squareup.picasso:picasso:2.8")
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.test.manifest)
     debugImplementation(libs.ui.tooling)
+    implementation("org.parceler:parceler-api:1.1.12")
+    annotationProcessor("org.parceler:parceler:1.1.12")
 }

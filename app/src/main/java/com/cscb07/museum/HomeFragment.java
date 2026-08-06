@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,7 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -28,7 +35,7 @@ public class HomeFragment extends Fragment {
         Button buttonSpinner = view.findViewById(R.id.buttonSpinner);
         Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
         Button buttonLogout = view.findViewById(R.id.buttonLogout);
-        
+
         // Hide the visibility by default for managing artifacts
         buttonManageItems.setVisibility(View.GONE);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -98,4 +105,5 @@ public class HomeFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
 }

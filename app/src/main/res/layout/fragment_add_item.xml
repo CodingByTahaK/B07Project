@@ -22,15 +22,29 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
+            android:layout_marginBottom="8dp"
             android:ems="10"
             android:hint="Name"
             android:inputType="text"
-            android:textColor="#36454F"
-            android:textColorHint="#36454F"
-            android:backgroundTint="#36454F"
+            app:layout_constraintBottom_toTopOf="@+id/editTextLotnum"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Lot Number -->
+        <EditText
+            android:id="@+id/editTextLotnum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:hint="Lot Number"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextName" />
 
         <!-- Artifact Description -->
         <EditText
@@ -48,7 +62,7 @@
             android:textColorHint="#36454F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextName" />
+            app:layout_constraintTop_toBottomOf="@id/editTextLotnum" />
 
         <!-- Period -->
         <Spinner

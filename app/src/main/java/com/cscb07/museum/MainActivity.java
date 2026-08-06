@@ -40,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void openSavedArtifacts() {
+        loadFragment(new SavedArtifactsFragment());
+    }
+
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
