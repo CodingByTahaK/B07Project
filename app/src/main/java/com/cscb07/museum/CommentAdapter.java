@@ -13,17 +13,34 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
+/**
+ * An adapter that displays comments in a RecyclerView format
+ * Allows admin users to edit or delete comments after comment 
+ * data is connected to each item view
+ */
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
     private List<Comment> commentList;
     private boolean adminUser;
     private String artifactID;
 
+    /**
+     * Creates a new CommentAdapter with the specified fields
+     * @param commentList - a lsit of comments to display
+     * @param adminUser - true if the user is an admin and otherwise is false
+     * @param artifactID - the unique ID of artifact which comments are displayed under
+     */
     public CommentAdapter(List<Comment> commentList, boolean adminUser, String artifactID) {
         this.commentList = commentList;
         this.adminUser = adminUser;
         this.artifactID = artifactID;
     }
 
+    /**
+     * Creates a ViewHolder for each comment
+     * @param parent - the parent ViewGroup
+     * @param viewType - the type of the new view
+     * @return a new instance of CommentViewHolder
+     */
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,6 +48,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return new CommentViewHolder(view);
     }
 
+    /**
+     * Connects comment data to the specific ViewHolder
+     * Displays username and the text of the comment
+     * Allows admin users to edit and delete comments
+     * @param holder - the ViewHolder that will be updated
+     * @param position - the position of the comment regarding the list
+     */
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = commentList.get(position);
@@ -131,17 +155,29 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         }
     }
 
+    /**
+     * Returns the number of comments
+     * @return the number of comments
+     */
     @Override
     public int getItemCount() {
         return commentList.size();
     }
 
+    /**
+     * ViewHolder for each comment in the RecyclerView
+     * It has references to the buttons
+     */
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
         TextView textViewUsername;
         TextView textViewComment;
         Button buttonEditComment;
         Button buttonDeleteComment;
 
+        /**
+        * Creates a ViewHolder for each comment
+        * @param commentView - the view that represents each comment
+        */
         public CommentViewHolder(@NonNull View commentView) {
             super(commentView);
             textViewUsername = commentView.findViewById(R.id.textViewUsername);
