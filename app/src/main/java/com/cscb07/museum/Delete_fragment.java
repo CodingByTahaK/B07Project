@@ -23,8 +23,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Delete fragment class is a subclass of fragment
+ * It cantains elements like buttons, database reference, search text views, etc
+ */
 public class Delete_fragment extends Fragment {
-
+    /**
+     * Declaring all elements
+     */
     private Button deletebutton, goback;
     private AutoCompleteTextView searchdelete;
 
@@ -36,9 +42,25 @@ public class Delete_fragment extends Fragment {
 
     private ArrayAdapter<SearchArtifactItem> searchAdapterdelete;
 
+    /**
+     * required empty constructor
+     */
     public Delete_fragment() {
     }
 
+    /**
+     * this method is triggered whenever a new delete fragment is made
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +74,9 @@ public class Delete_fragment extends Fragment {
         db = FirebaseDatabase.getInstance(
                 "https://b07-project-66023-default-rtdb.firebaseio.com/"
         );
-
+        /**
+         * Attaching declared variables and XML through method findViewByID and R class
+         */
         searchdelete = view.findViewById(R.id.searchdelete);
         deletebutton = view.findViewById(R.id.buttondelete);
         goback = view.findViewById(R.id.goback1);
@@ -70,12 +94,24 @@ public class Delete_fragment extends Fragment {
         searchdelete.setOnClickListener(v ->
                 searchdelete.showDropDown()
         );
-
+        /**
+         * setting the back button to delete the current delete fragment and return to parent fragment
+         */
         goback.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
+        /**
+         * assigning the search bar an on click listener for whenever an artifact is selected
+         */
         searchdelete.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
-
+                    /**
+                     * On call the onItemClick method will get the artifact at the clicked position
+                     * and store its associated firebase key so we know what artifact to delete
+                     * @param parent
+                     * @param view
+                     * @param position
+                     * @param id
+                     */
                     @Override
                     public void onItemClick(
                             AdapterView<?> parent,
@@ -105,9 +141,15 @@ public class Delete_fragment extends Fragment {
                     }
                 }
         );
-
+        /**
+         * method call to load in the artifacts into the search bar
+         */
         loadArtifactsForSearch();
-
+        /**
+         * This on click method calls the delete method on the selected artifact
+         * if a user clicks this button without selecting an artifact, it will fail
+         * The method will prompt the user with a confirmation screen to avoid accidental deletion
+         */
         deletebutton.setOnClickListener(v -> {
 
             if (selectedFirebaseKey == null ||
@@ -146,6 +188,11 @@ public class Delete_fragment extends Fragment {
         return view;
     }
 
+    /**
+     * this is the method used to load in the artifacts into the search bar
+     * It is the same as in Edit Artifact and uses a for loop to iterate through the database
+     * and fetches artifact and bundles it together with its key using SearchArtifactItem class
+     */
     private void loadArtifactsForSearch() {
 
         DatabaseReference artifactsRef =
@@ -203,6 +250,10 @@ public class Delete_fragment extends Fragment {
         );
     }
 
+    /**
+     * this is the actual method that deletes the artifact
+     * it Uses the stored firebase key to find the artifact in the database and erase it
+     */
     private void deleteArtifact() {
 
         DatabaseReference artifactRef =
@@ -250,6 +301,9 @@ public class Delete_fragment extends Fragment {
                 });
     }
 
+    /**
+     * A helper class used to bundle the artifact and its firebase key together
+     */
     private static class SearchArtifactItem {
 
         private final String firebaseKey;
@@ -273,6 +327,10 @@ public class Delete_fragment extends Fragment {
             return artifact;
         }
 
+        /**
+         * Overrides to string so that information mainly name and Lotnum are displayed correctly
+         * @return String
+         */
         @Override
         public String toString() {
 

@@ -29,8 +29,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * EditArtifact fragment is a subclass of Fragment which is used for editing existing artifacts
+ * in the database. The artifact must already exist to be edited.
+ */
 public class EditArtifact extends Fragment {
-
+    /**
+     * below are just defining the fields to attach to the xml, firebase and supabase
+     */
     private EditText EditName, EditLotnum, EditDesc, culturalOrigin, dimensions,
             conditionReport, currentLocation, accMethod, provenance, accNum, notes;
 
@@ -50,19 +56,38 @@ public class EditArtifact extends Fragment {
     private final List<SearchArtifactItem> allArtifacts = new ArrayList<>();
     private ArrayAdapter<SearchArtifactItem> searchAdapter;
 
+    /**
+     * this is an empty constructor which is required by firebase and Android
+     */
     public EditArtifact() {
         // Required empty public constructor
     }
 
+    /**
+     * This method is triggered whenever a new EditArtifact fragment is requested
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return the edit fragment view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
-
+        // assign a variable to be a firebase reference
         db = FirebaseDatabase.getInstance("https://b07-project-66023-default-rtdb.firebaseio.com/");
 
-        // attach variables to XML
+        /**
+         * below is where variables are connected to the actual XML using the
+         * findViewById and the R class
+         * the method takes in a valid ID of an element in the associated XML file
+         */
         searchArtifactView = view.findViewById(R.id.searchArtifactView);
 
         EditName = view.findViewById(R.id.editTextArtiName);
@@ -118,19 +143,24 @@ public class EditArtifact extends Fragment {
         searchArtifactView.setAdapter(searchAdapter);
         searchArtifactView.setThreshold(1);
         searchArtifactView.setOnClickListener(v -> searchArtifactView.showDropDown());
-
+        /**
+         * this method is activated when an artifact from the drop down menu is clicked
+         * @param is the adapter view which is basically just the list of artifacts
+         * It gets the position of the clicked artifact and gets it's associated firebase key
+         * so the EditArtifact method knows what artifact in the database to change.
+         */
         searchArtifactView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SearchArtifactItem selectedItem = (SearchArtifactItem) parent.getItemAtPosition(position);
-
+                //if no object is chosen, return
                 if (selectedItem == null || selectedItem.getArtifact() == null) {
                     return;
                 }
 
                 selectedFirebaseKey = selectedItem.getFirebaseKey();
                 fillEditFields(selectedItem.getArtifact());
-
+                //toast message to notify user of successful selection
                 Toast.makeText(
                         getContext(),
                         "Artifact selected",
@@ -138,10 +168,16 @@ public class EditArtifact extends Fragment {
                 ).show();
             }
         });
-
+        /**
+         * this method loads in the artifacts into the search spinner
+         */
         loadArtifactsForSearch();
 
-        // Supabase setup
+        /**
+         * This is the supabase setup, it basically triggers a gallery activity
+         *  and allows the user to choose a photo from their gallery and upload it to
+         *  our supabase bucket
+         */
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
                 registerForActivityResult(
                         new ActivityResultContracts.PickVisualMedia(),
@@ -177,7 +213,7 @@ public class EditArtifact extends Fragment {
                                                 imageUrl = publicUrl;
 
                                                 Log.d("Supabase", "Image uploaded: " + publicUrl);
-
+                                                //notification to tell user of successful upload
                                                 Toast.makeText(
                                                         getContext(),
                                                         "Image uploaded successfully",
@@ -203,7 +239,9 @@ public class EditArtifact extends Fragment {
                             }
                         }
                 );
-
+        /**
+         * assigning the submit button to trigger the EditArtifact and existLotNum methods on click
+         */
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,6 +265,13 @@ public class EditArtifact extends Fragment {
         return view;
     }
     //get the database key from chosen artifact
+
+    /**
+     * This method iterates through the firebase database to show the adapter used in the search bar
+     * what artifacts are currently in the database
+     * This method makes use of the helper class SearchArtifactItem in order to keep the firebase key and artifact associated
+     *
+     */
     private void loadArtifactsForSearch() {
         DatabaseReference artifactsRef = db.getReference("artifacts");
 
@@ -234,7 +279,11 @@ public class EditArtifact extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 allArtifacts.clear();
-
+                /**This is the important loop that iterates through the database
+                the statement snapshot.getChildren() returns every artifact in the database
+                Hence the for loop says "for each artifact in the database, bundle the artifact with its key
+                 and "
+                 */
                 for (DataSnapshot artifactSnapshot : snapshot.getChildren()) {
                     Artifact artifact = artifactSnapshot.getValue(Artifact.class);
 
@@ -245,7 +294,7 @@ public class EditArtifact extends Fragment {
                         }
                     }
                 }
-
+                //update adapter
                 searchAdapter.notifyDataSetChanged();
             }
 
@@ -259,7 +308,13 @@ public class EditArtifact extends Fragment {
             }
         });
     }
-    //Automatically fill in fields from chosen artifact
+
+    /**
+     * When an artifact gets chosen from the search bar, it loads in all its information into
+     * the textfields/spinners to make it easier for the user
+     * @param artifact
+     *
+     */
     private void fillEditFields(Artifact artifact) {
         //set texts
         EditName.setText(safe(artifact.getName()));
@@ -280,6 +335,11 @@ public class EditArtifact extends Fragment {
         setSpinnerSelection(EditCat, safe(artifact.getCategory()));
     }
 
+    /**
+     * this method is used by fillEditFields to set the spinners to the right values
+     * @param spinner
+     * @param value
+     */
     private void setSpinnerSelection(Spinner spinner, String value) {
         ArrayAdapter adapter = (ArrayAdapter) spinner.getAdapter();
         if (adapter == null) {
@@ -295,7 +355,12 @@ public class EditArtifact extends Fragment {
         }
     }
 
-
+    /**
+     * Since the value Lotnum must be unique, this method checks whether the new Lotnum already exist
+     * Of course, it skips the check against itself as that would mean you must chagne the lotnum every time
+     * If the check if passed, it calls EditArtifact to actually instantiate the changes wanted
+     * @param selectedLotNum
+     */
     public void existLotNum(String selectedLotNum) {
         DatabaseReference ref = db.getReference("artifacts");
 
@@ -323,6 +388,7 @@ public class EditArtifact extends Fragment {
                         }
                     }
                 }
+                //call to the actual edit function
                 EditArtifact();
             }
 
@@ -336,6 +402,13 @@ public class EditArtifact extends Fragment {
             }
         });
     }
+
+    /**
+     * this it the main function for editing
+     * this method takes the data from all the fields and changes the values in firebase
+     * To avoid issues, the name and Lotnum can never be empty but since they are autofilled
+     * This should pose no problems to the user
+     */
     private void EditArtifact() {
 
         if (selectedFirebaseKey == null || selectedFirebaseKey.trim().isEmpty()) {
@@ -404,10 +477,21 @@ public class EditArtifact extends Fragment {
         ).show();
     }
 
+    /**
+     * this helper function is used when auto filling artifact details so if a field is null
+     * it simply returns the empty string
+     * @param value
+     * @return String
+     */
+
     private String safe(String value) {
         return value == null ? "" : value;
     }
 
+    /**
+     * this is a helper class made to bundle an Artifact and the firebase key
+     * associated with it together
+     */
     private static class SearchArtifactItem {
         private final String firebaseKey;
         private final Artifact artifact;
@@ -424,7 +508,12 @@ public class EditArtifact extends Fragment {
         public Artifact getArtifact() {
             return artifact;
         }
-        //override toString to adapt for firebase key
+
+        /**
+         * Overriding toString so that information from the SearchArtifact object is
+         * presented properly
+         * @return String
+         */
         @Override
         public String toString() {
             String name = artifact != null ? artifact.getName() : "";
