@@ -1,3 +1,16 @@
+/**
+ * File: Artifact.java
+ *
+ * Version History:
+ * v1.0: Initial implementation
+ * v1.1: Added liking and number of likes fields
+ * v1.2: Implemented Parcelable to use in recycler and expanded views
+ * v1.3: Improved readability of code
+ *
+ * Date: Aug 06, 2026
+ *
+ */
+
 package com.cscb07.museum;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -15,10 +28,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * Description: This is the Artifact model that holds all the fields an Artifact needs
+ * @version 1.3 06 Aug 2026
+ */
 
 public class Artifact implements Parcelable {
 
-    //Mandatory Fields
     private String lotNum;
     private String name;
     private String description;
@@ -76,7 +92,9 @@ public class Artifact implements Parcelable {
     }
 
 
-    // Load current user's status: liked and saved artifacts, and artifact's like count
+    /**
+     * Load current user's status: liked and saved artifacts, and artifact's like count
+     */
     public void loadUserStatus() {
         if (lotNum == null) return;
         this.user = FirebaseAuth.getInstance().getCurrentUser();
@@ -314,6 +332,11 @@ public class Artifact implements Parcelable {
         this.likeCount = likeCount;
     }
 
+    /**
+     * Updates database on whether the user liked or unliked an artifact
+     * @param errorHandler
+     * @param onSuccess
+     */
     public void toggleLike(Consumer<String> errorHandler, Runnable onSuccess) {
         this.user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {

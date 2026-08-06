@@ -38,10 +38,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
     private List<String> savedArtifactIDs = new ArrayList<>();
 
     private static final long CLICK_THRESHOLD = 500;
-
-//    public interface LikeClick {
-//        void onLikeClick(Artifact artifact, int position);
-//    }
+    
 
     /**
      * Callback interface used when a user clicks an artifact's
