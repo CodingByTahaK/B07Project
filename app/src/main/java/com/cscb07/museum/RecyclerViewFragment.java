@@ -76,7 +76,6 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
 
     private ArrayList<String> savedArtifactIDs;
 
-    private Spinner spinnerCategory;
     private EditText searchEditText;
     private FirebaseDatabase db;
     private FirebaseAuth auth;
@@ -121,8 +120,6 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
                 new LinearLayoutManager(getContext())
         );
 
-        //will check later if this needs to be deleted
-        spinnerCategory = view.findViewById(R.id.spinnerCategory);
         searchEditText = view.findViewById(R.id.searchEditText);
 
         ArrayAdapter<CharSequence> adapter =
@@ -138,7 +135,6 @@ public class RecyclerViewFragment extends Fragment implements RecyclerExpandedVi
         );
 
         searchEditText = view.findViewById(R.id.searchEditText);
-        spinnerCategory.setAdapter(adapter);
 
         spinnerPagination = view.findViewById(R.id.spinnerPagination);
         tvPageInfo = view.findViewById(R.id.tvPageInfo);
