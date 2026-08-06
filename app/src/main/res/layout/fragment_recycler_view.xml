@@ -12,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:backgroundTint="#7A3333"
         android:hint="Search artifacts"
         android:inputType="text"
         android:padding="12dp"
